@@ -1,5 +1,3 @@
-import 'package:code_map/load_page.dart';
-import 'package:code_map/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

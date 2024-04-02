@@ -1,10 +1,7 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:code_map/home_page.dart';
 import 'package:code_map/load_page.dart';
 import 'package:code_map/side_menu.dart';
 import 'package:flutter/material.dart';
-import 'load_page.dart';
-import 'side_menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,11 +22,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: CombinedScreen(),
+      home: const CombinedScreen(),
       );
   }
 }
-
 
 class CombinedScreen extends StatefulWidget {
   const CombinedScreen({super.key});
