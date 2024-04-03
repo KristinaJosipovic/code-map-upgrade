@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '/service/database.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
@@ -42,8 +44,14 @@ class SideMenu extends StatelessWidget {
 
           ),
           ListTile(
-            onTap: () {
-              print('Widget je dodirnut!');
+            onTap: () async {
+              Map<String, dynamic> techInfoMap = {
+                "kompajler":"negdje",
+                "naziv":"brain fuck",
+                "slika":"brain_fuck.png",
+              };
+              await DatabaseMethods().add(techInfoMap, "1234");
+
             },
             leading: const CircleAvatar(
               backgroundColor: Colors.transparent,
