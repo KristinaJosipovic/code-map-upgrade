@@ -1,9 +1,9 @@
 import 'package:code_map/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../models/category_model.dart';
 import '../models/diet_model.dart';
 import '../models/popular_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -14,14 +14,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<CategoryModel> categories = [];
   List<DietModel> diets = [];
   List<PopularDietsModel> popularDiets = [];
 
   Color backColor = Colors.white;
 
   void _getInitialInfo() {
-    categories = CategoryModel.getCategories();
     diets = DietModel.getDiets();
     popularDiets = PopularDietsModel.getPopularDiets();
   }
@@ -239,69 +237,79 @@ class _HomePageState extends State<HomePage> {
 
   Column _categoriesSection() {
     return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                'Kategorije',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Text(
+            'Kategorije',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
             ),
-            const SizedBox(height: 15,),
-            SizedBox(
-              height: 120,
-              child: ListView.separated(
-                itemCount: categories.length,
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20
-                  ),
-                  separatorBuilder: (context, index) =>
-                  const SizedBox(width: 25,),
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: categories[index].boxColor.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(categories[index].iconPath),
-                            ),
+          ),
+        ),
+        const SizedBox(height: 15,),
+        SizedBox(
+          height: 120,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('Kategorije').snapshots(),
+            builder: (context, snapshot) {
+              List<Container> categoryWidgets = [];
+              if (snapshot.hasData) {
+                final categories = snapshot.data?.docs.reversed.toList();
+                for (var cat in categories!) {
+                  final categoryWidget = Container(
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: Color(int.parse(cat['boxColor'])).withOpacity(0.7),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const SizedBox(width: 25,), // TODO: treba biti razmak
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
                           ),
-                          Text(
-                            categories[index].name,
-                            style: const TextStyle(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(cat['iconPath']),
+                          ),
+                        ),
+                        Text(
+                          cat['name'],
+                          style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               color: Colors.black,
                               fontSize: 14
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  }
-              ),
-            ),
-          ],
-        );
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                  categoryWidgets.add(categoryWidget);
+                }
+              }
+              return ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20
+                  ),
+                  children: categoryWidgets,
+                );
+
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   Container _searchField() {
@@ -358,7 +366,6 @@ class _HomePageState extends State<HomePage> {
           ),
         );
   }
-
 
   }
 
