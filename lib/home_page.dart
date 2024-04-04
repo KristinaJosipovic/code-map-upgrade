@@ -296,14 +296,17 @@ class _HomePageState extends State<HomePage> {
                   categoryWidgets.add(categoryWidget);
                 }
               }
-              return ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20
-                  ),
-                  children: categoryWidgets,
-                );
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                itemCount: categoryWidgets.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: categoryWidgets[index],
+                  );
+                },
+              );
 
             },
           ),
