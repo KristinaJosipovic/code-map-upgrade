@@ -256,50 +256,55 @@ class _HomePageState extends State<HomePage> {
           child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('Kategorije').snapshots(),
             builder: (context, snapshot) {
-              List<Container> categoryWidgets = [];
+              List<GestureDetector> categoryWidgets = [];
               if (snapshot.hasData) {
                 final categories = snapshot.data?.docs.reversed.toList();
                 for (var cat in categories!) {
-                  final categoryWidget = Container(
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Color(int.parse(cat['boxColor'])).withOpacity(0.7),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const SizedBox(width: 25,), // TODO: treba biti razmak
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
+                  final categoryWidget = GestureDetector(
+                    onTap: () => print(cat['name'] + ' clicked!'), // TODO: load technologies based on category
+                    child: Container(
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: Color(int.parse(cat['boxColor'])).withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const SizedBox(width: 25,),
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(cat['iconPath']),
+                            ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset(cat['iconPath']),
-                          ),
-                        ),
-                        Text(
-                          cat['name'],
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: 14
-                          ),
-                        )
-                      ],
+                          Text(
+                            cat['name'],
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                                fontSize: 14
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   );
                   categoryWidgets.add(categoryWidget);
                 }
               }
-              return ListView.builder(
+              return ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 itemCount: categoryWidgets.length,
+                separatorBuilder: (context, index) =>
+                const SizedBox(width: 5,),
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 15),
