@@ -207,26 +207,30 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ],
                                 ),
-                                Container(
-                                  height: 45,
-                                  width: 130,
-                                  decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                        colors: [ // colors should be upgraded
-                                          Colors.blue, Colors.green
-                                        ]
+                                GestureDetector(
+                                  onTap: () => print("${tech['naziv']} selected!"),
+                                  // TODO: functionality should be implemented
+                                  child: Container(
+                                    height: 45,
+                                    width: 130,
+                                    decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                          colors: [ // colors should be upgraded
+                                            Colors.blue, Colors.green
+                                          ]
+                                      ),
+                                      borderRadius: BorderRadius.circular(50),
                                     ),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'Prikaži',
-                                      style: TextStyle(
-                                        // colors should be upgraded
-                                        //color: diets[index].viewIsSelected ? Colors.white : const Color(0xffC58BF2),
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14
+                                    child: const Center(
+                                      child: Text(
+                                        'Prikaži',
+                                        style: TextStyle(
+                                          // colors should be upgraded
+                                          //color: diets[index].viewIsSelected ? Colors.white : const Color(0xffC58BF2),
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14
+                                        ),
                                       ),
                                     ),
                                   ),
