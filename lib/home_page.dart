@@ -172,9 +172,14 @@ class _HomePageState extends State<HomePage> {
                           final techWidget = Container(
                             width: 210,
                             decoration: BoxDecoration(
-                              color: Color(int.parse(tech['color']))
-                                  .withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(20),
+                              //color: Color(int.parse(tech['color']))
+                              color:Color(0xffffffff).withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(30),
+                              border: Border.all(
+                                color: Color(int.parse(tech['color'])),
+                                width: 6,
+                              ),
+
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -208,15 +213,14 @@ class _HomePageState extends State<HomePage> {
                                   decoration: BoxDecoration(
                                     gradient: const LinearGradient(
                                         colors: [ // colors should be upgraded
-                                          Color(0xff9DCEFF),
-                                          Color(0xff92A3FD),
+                                          Colors.blue, Colors.green
                                         ]
                                     ),
                                     borderRadius: BorderRadius.circular(50),
                                   ),
                                   child: const Center(
                                     child: Text(
-                                      'View',
+                                      'Prikaži',
                                       style: TextStyle(
                                         // colors should be upgraded
                                         //color: diets[index].viewIsSelected ? Colors.white : const Color(0xffC58BF2),
@@ -295,7 +299,7 @@ class _HomePageState extends State<HomePage> {
                       width: 100,
                       decoration: BoxDecoration(
                         color: Color(int.parse(cat['boxColor'])).withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
