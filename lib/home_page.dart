@@ -1,7 +1,6 @@
 import 'package:code_map/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../models/diet_model.dart';
 import '../models/popular_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -14,13 +13,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<DietModel> diets = [];
   List<PopularDietsModel> popularDiets = [];
+  String currentCategory = "Funkcionalno";
 
   Color backColor = Colors.white;
 
   void _getInitialInfo() {
-    diets = DietModel.getDiets();
     popularDiets = PopularDietsModel.getPopularDiets();
   }
 
@@ -48,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 40,),
           _categoriesSection(),
           const SizedBox(height: 40,),
-          _dietSection(),
+          _languagesFrameworksSection(currentCategory),
           const SizedBox(height: 40,),
           _popularModelSection(),
           const SizedBox(height: 40,),
@@ -144,14 +142,14 @@ class _HomePageState extends State<HomePage> {
         );
   }
 
-  Column _dietSection() {
+  Column _languagesFrameworksSection(String category) {
     return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Padding(
               padding: EdgeInsets.only(left: 20),
               child: Text(
-                'Languages & frameworks',
+                'Jezici i framework-ovi',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -162,73 +160,100 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 15,),
             SizedBox(
               height: 240,
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 210,
-                    decoration: BoxDecoration(
-                      color: diets[index].boxColor.withOpacity(0.7),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        //SvgPicture.asset(diets[index].iconPath),
-                        Image.asset(diets[index].iconPath, width: 100, height: 100,),
-                        Column(
-                          children: [
-                            Text(
-                              diets[index].name,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                  fontSize: 16
-                              ),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance.collection('Tehnologije').snapshots(),
+                builder: (context, snapshot) {
+                  List<Container> techWidgets = [];
+                  if (snapshot.hasData) {
+                    final technologies = snapshot.data?.docs.reversed.toList();
+                    for (var tech in technologies!) {
+                      try {
+                        if (tech['kategorija'] == currentCategory) {
+                          final techWidget = Container(
+                            width: 210,
+                            decoration: BoxDecoration(
+                              color: Color(int.parse(tech['color']))
+                                  .withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            Text(
-                              '${diets[index].level} | ${diets[index].duration} | ${diets[index].calorie}',
-                              style: const TextStyle(
-                                  color: Color(0xff7B6F72),
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                //SvgPicture.asset(diets[index].iconPath),
+                                Image.asset(
+                                  tech['slika'], width: 100, height: 100,),
+                                Column(
+                                  children: [
+                                    Text(
+                                      tech['naziv'],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                          fontSize: 16
+                                      ),
+                                    ),
+                                    const Text(
+                                      'To be added', // change the text
+                                      style: TextStyle(
+                                          color: Color(0xff7B6F72),
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  height: 45,
+                                  width: 130,
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                        colors: [ // colors should be upgraded
+                                          Color(0xff9DCEFF),
+                                          Color(0xff92A3FD),
+                                        ]
+                                    ),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      'View',
+                                      style: TextStyle(
+                                        // colors should be upgraded
+                                        //color: diets[index].viewIsSelected ? Colors.white : const Color(0xffC58BF2),
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
-                          ],
+                          );
+
+                          techWidgets.add(techWidget);
+                        }
+                      }
+                      catch (error) {}
+                    }
+                  }
+                  return ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.only(left: 0, right: 20),
+                    itemCount: techWidgets.length,
+                    separatorBuilder: (context, index) =>
+                    const SizedBox(width: 2,),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20
                         ),
-                        Container(
-                          height: 45,
-                          width: 130,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                diets[index].viewIsSelected ? const Color(0xff9DCEFF) : Colors.transparent,
-                                diets[index].viewIsSelected ? const Color(0xff92A3FD) : Colors.transparent,
-                              ]
-                            ),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'View',
-                              style: TextStyle(
-                                color: diets[index].viewIsSelected ? Colors.white : const Color(0xffC58BF2),
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                        child: techWidgets[index],
+                      );
+                    },
                   );
                 },
-                separatorBuilder: (context, index) => const SizedBox(width: 25,),
-                itemCount: diets.length,
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20
-                ),
               ),
             ),
           ],
@@ -261,7 +286,11 @@ class _HomePageState extends State<HomePage> {
                 final categories = snapshot.data?.docs.reversed.toList();
                 for (var cat in categories!) {
                   final categoryWidget = GestureDetector(
-                    onTap: () => print(cat['name'] + ' clicked!'), // TODO: load technologies based on category
+                    onTap: () {
+                      print(cat['name'] + ' clicked!');
+                      currentCategory = cat['name'];
+                      setState(() {});
+                    },
                     child: Container(
                       width: 100,
                       decoration: BoxDecoration(
