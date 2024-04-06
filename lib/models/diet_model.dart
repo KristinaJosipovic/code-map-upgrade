@@ -25,7 +25,7 @@ class DietModel {
     diets.add(
       DietModel(
        name: 'Python',
-       iconPath: 'assets/logos/python_logo.png',
+       iconPath: 'assets/logos/python.png',
        level: 'Easy',
        duration: '30mins',
        calorie: '180kCal',
@@ -37,7 +37,7 @@ class DietModel {
     diets.add(
       DietModel(
        name: 'JavaScript',
-       iconPath: 'assets/logos/javascript_logo.png',
+       iconPath: 'assets/logos/javascript.png',
        level: 'Easy',
        duration: '20mins',
        calorie: '230kCal',
@@ -49,7 +49,7 @@ class DietModel {
     diets.add(
         DietModel(
             name: 'Ruby',
-            iconPath: 'assets/logos/ruby_logo.png',
+            iconPath: 'assets/logos/ruby.png',
             level: 'Easy',
             duration: '20mins',
             calorie: '230kCal',
