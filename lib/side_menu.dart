@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '/service/database.dart';
+import 'home_page.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
@@ -13,9 +14,9 @@ class SideMenu extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           const UserAccountsDrawerHeader(
-                accountName: Text('Kristina',
+                accountName: Text('',
                   style: TextStyle(fontFamily: 'Poppins', color: Colors.black),),
-                accountEmail: Text('kristina.josipovic@gmail.com',
+                accountEmail: Text('',
                   style: TextStyle(fontFamily: 'Poppins', color: Colors.black),),
                 decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -27,7 +28,7 @@ class SideMenu extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              print('Widget je dodirnut!');
+              HomePage();
             },
             leading: const CircleAvatar(
               backgroundColor: Colors.transparent,
@@ -43,13 +44,7 @@ class SideMenu extends StatelessWidget {
 
           ),
           ListTile(
-            onTap: () async {
-              Map<String, dynamic> techInfoMap = {
-                "kompajler":"negdje",
-                "naziv":"brain fuck",
-                "slika":"brain_fuck.png",
-              };
-              await DatabaseMethods().add(techInfoMap, "1234");
+            onTap: () {
 
             },
             leading: const CircleAvatar(
@@ -96,7 +91,7 @@ class SideMenu extends StatelessWidget {
                 "Help", style: TextStyle(
               fontFamily: 'Poppins',)),
           ),
-          ListTile(
+         /* ListTile(
             onTap: () {
               print('Widget je dodirnut!');
             },
@@ -111,7 +106,7 @@ class SideMenu extends StatelessWidget {
             title: const Text(
                 "Account", style: TextStyle(
               fontFamily: 'Poppins',)),
-          ),
+          ),*/
           const Divider(),
           ListTile(
             onTap: () {
