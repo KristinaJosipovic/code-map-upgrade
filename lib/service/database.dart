@@ -18,8 +18,8 @@ class FirebaseStorageService extends GetxService {
       return null;
     }
     try {
-      var urlRef = firebaseStorage.child("Tehnologije").child(
-          '${imgName.toLowerCase()}.png');
+      imgName = imgName.split('/').last;
+      var urlRef = firebaseStorage.child("Tehnologije").child(imgName.toLowerCase());
       var imgUrl = await urlRef.getDownloadURL();
       return imgUrl;
     } catch (e) {

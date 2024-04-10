@@ -19,7 +19,7 @@ class MainArticle extends StatefulWidget {
 class _MainArticleState extends State<MainArticle> {
 
   String currentTech = getCurrentTech();
-  String UrlImage = getUrlImage();
+  String urlImage = getUrlImage();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -50,150 +50,82 @@ class _MainArticleState extends State<MainArticle> {
                         body: SingleChildScrollView(
                           padding: const EdgeInsets.all(12.0),
                               child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch, // bolje nego 'start'
                                   children: [
-                                    Container(
-                                      height: (text['intro'] != null && text['intro'].isNotEmpty)
-                                          ? null : 0.0,
-                                      child: Text(() {
-                                        try { return text['intro'].replaceAll("\\n", "\n");
-                                        } catch (e) { return ''; }
-                                        }(),
-                                        style: tStyle,
-                                        textAlign: TextAlign.justify,
-                                      ),
-                                    ),
+                                    textSection(text, 'intro'),
                                     Image.asset(
-                                      UrlImage, width: 200, height: 200,),
-                                    Container(
-                                      height: (text['history'] != null && text['history'].isNotEmpty)
-                                          ? null : 0.0,
-                                      child: Text((){
-                                            try { return text['history'].replaceAll("\\n", "\n");
-                                            } catch (e) { return ''; }
-                                            }(),
-                                            style: tStyle,
-                                            textAlign: TextAlign.justify,
-                                      ),
-                                    ),
-                                    Container(
-                                      height: (text['interface'] != null && text['interface'].isNotEmpty)
-                                          ? null : 0.0,
-                                      child: Text((){
-                                          try { return text['interface'].replaceAll("\\n", "\n");
-                                          } catch (e) { return ''; }
-                                          }(),
-                                          style: tStyle,
-                                          textAlign: TextAlign.justify,
-                                      ),
-                                    ),
-                                    Container(
-                                      height: (text['syntax'] != null && text['syntax'].isNotEmpty)
-                                          ? null : 0.0,
-                                      child: Text((){
-                                          try { return text['syntax'].replaceAll("\\n", "\n");
-                                          } catch (e) { return ''; }
-                                          }(),
-                                          style: tStyle,
-                                          textAlign: TextAlign.justify,
-                                      ),
-                                    ),
-                                    Container(
-                                      height: (text['extensions'] != null && text['extensions'].isNotEmpty)
-                                          ? null : 0.0,
-                                      child: Text((){
-                                          try { return text['extensions'].replaceAll("\\n", "\n");
-                                          } catch (e) { return ''; }
-                                          }(),
-                                          style: tStyle,
-                                          textAlign: TextAlign.justify,
-                                      ),
-                                    ),
-                                    Container(
-                                      height: (text['use'] != null && text['use'].isNotEmpty)
-                                          ? null : 0.0,
-                                      child: Text((){
-                                          try { return text['use'].replaceAll("\\n", "\n");
-                                          } catch (e) { return ''; }
-                                           }(),
-                                          style: tStyle,
-                                          textAlign: TextAlign.justify,
-                                      ),
-                                    ),
-                                    Container(
-                                      height: (text['popularity'] != null && text['popularity'].isNotEmpty)
-                                          ? null : 0.0,
-                                      child: Text((){
-                                          try { return text['popularity'].replaceAll("\\n", "\n");
-                                          } catch (e) { return ''; }
-                                         }(),
-                                          style: tStyle,
-                                          textAlign: TextAlign.justify,
-                                      ),
-                                    ),
-                                    textSection(text, "enumeration_des"),
+                                      urlImage, width: 200, height: 200,),
+                                    textSection(text, 'history'),
+                                    textSection(text, 'interface'),
+                                    textSection(text, 'syntax'),
+                                    textSection(text, 'extensions'),
+                                    textSection(text, 'use'),
+                                    textSection(text, 'popularity'),
+                                    textSection(text, 'enumeration_des'),
                                  ListView.builder(
                                         shrinkWrap: true,
                                         itemCount: text['enumeration'].length ~/ 2,
                                         itemBuilder: (context, index) {
                                           final evenIndex = index * 2;
                                           final oddIndex = evenIndex + 1;
-                                          return Card(
-                                            color: Color(
-                                                int.parse(text['color'])),
-                                            elevation: 2,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(
-                                                  0.0),
-                                            ),
-                                            child: ExpansionTile(
-                                              title: Text(
-                                                text['enumeration'][evenIndex].replaceAll("\\n", "\n"),
-                                                style: const TextStyle(
-                                                  fontFamily: 'Poppins',
-                                                  color: Colors.black,
-                                                  fontSize: 14,
-                                                    fontWeight: FontWeight.w600
-                                                )
+                                          try {
+                                            return Card(
+                                              color: Color(
+                                                  int.parse(text['color'])),
+                                              elevation: 2,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius
+                                                    .circular(
+                                                    0.0),
                                               ),
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Text(
-                                                    text['enumeration'][oddIndex].replaceAll("\\n", "\n"),
-                                                    style: tStyle,
-                                                    textAlign: TextAlign.justify),
-                                                )
-                                              ],
-                                            ),
-                                          );
+                                              child: ExpansionTile(
+                                                title: Text(
+                                                    text['enumeration'][evenIndex]
+                                                        .replaceAll(
+                                                        "\\n", "\n"),
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Poppins',
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight
+                                                            .w600
+                                                    )
+                                                ),
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .all(
+                                                        10.0),
+                                                    child: Text(
+                                                        text['enumeration'][oddIndex]
+                                                            .replaceAll(
+                                                            "\\n", "\n"),
+                                                        style: tStyle,
+                                                        textAlign: TextAlign
+                                                            .justify),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          }
+                                          catch (e) {} // try-catch za card
                                         },
                                       ),
-                                    Container(
-                                      height: (text['implementation'] != null && text['implementation'].isNotEmpty)
-                                          ? null : 0.0,
-                                      child: Text((){
-                                          try { return text['implementation'].replaceAll("\\n", "\n");
-                                          } catch (e) { return ''; }
-                                          }(),
-                                          style: tStyle,
-                                          textAlign: TextAlign.justify,
-                                      ),
-                                    ),
+                                    textSection(text, 'implementation')
                                   ]
                               )
                           ),
                         );
                   }catch(e){}
                 }}
-          return Text('Nema podataka za trenutnu tehnologiju');
+            return const Text('Nema podataka za trenutnu tehnologiju');
            }
           },
     );
   }
 
-  Container textSection(QueryDocumentSnapshot<Object?> text, String textDoc) {
-    return Container(
+  SizedBox textSection(QueryDocumentSnapshot<Object?> text, String textDoc) { // kodmi ponudio da stavim sized box
+    return SizedBox(
       height: (text[textDoc] != null && text[textDoc].isNotEmpty)
           ? null : 0.0,
       child: Text((){
@@ -201,9 +133,9 @@ class _MainArticleState extends State<MainArticle> {
         } catch (e) { return ''; }
       }(),
         style: tStyle,
-        textAlign: TextAlign.left,
-                                    ),
-                                  );
+        textAlign: TextAlign.justify,
+      ),
+    );
   }
 }
 

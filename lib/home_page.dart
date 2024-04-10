@@ -1,12 +1,12 @@
 import 'package:code_map/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../models/popular_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../articles/article_page.dart';
+import 'service/database.dart';
 
 String currentTech = "";
-String UrlImage = "";
+String urlImage = "";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,18 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<PopularDietsModel> popularDiets = [];
   String currentCategory = "Funkcionalno";
 
   Color backColor = Colors.white;
 
-  void _getInitialInfo() {
-    popularDiets = PopularDietsModel.getPopularDiets();
-  }
-
   @override
   Widget build(BuildContext context) {
-    _getInitialInfo();
     return Scaffold(
       drawer: const SideMenu(),
       appBar: AppBar(
@@ -58,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Column _popularModelSection() {
+  /*Column _popularModelSection() {
     return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -143,7 +137,7 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         );
-  }
+  }*/
 
   Column _languagesFrameworksSection(String category) {
     return Column(
@@ -176,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                             width: 210,
                             decoration: BoxDecoration(
                               //color: Color(int.parse(tech['color']))
-                              color:Color(0xffffffff).withOpacity(0.7),
+                              color: const Color(0xffffffff).withOpacity(0.7),
                               borderRadius: BorderRadius.circular(30),
                               border: Border.all(
                                 color: Color(int.parse(tech['color'])),
@@ -187,9 +181,8 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                //SvgPicture.asset(diets[index].iconPath),
-                                Image.asset(
-                                  tech['slika'], width: 100, height: 100,),
+                                Image.asset(tech['slika'], width: 100, height: 100,),
+                                //Image.network(FirebaseStorageService().getImage(tech['slika']) as String, width:100, height:100), ne radi
                                 Column(
                                   children: [
                                     Text(
@@ -214,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                                   onTap: () {
                                     print("${tech['naziv']} selected!");
                                     currentTech = tech['naziv'];
-                                    UrlImage = tech['slika'];
+                                    urlImage = tech['slika'];
                                     getCurrentTech();
                                     getUrlImage();
                                     Navigator.push(
@@ -423,13 +416,12 @@ class _HomePageState extends State<HomePage> {
           ),
         );
   }
-
-  }
+}
 
 String getCurrentTech(){
   return currentTech;
 }
 
 String getUrlImage(){
-  return UrlImage;
+  return urlImage;
 }
