@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../models/popular_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../articles/article_page.dart';
 
+String currentTech = "";
+String UrlImage = "";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -208,8 +211,17 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                                 GestureDetector(
-                                  onTap: () => print("${tech['naziv']} selected!"),
-                                  // TODO: functionality should be implemented
+                                  onTap: () {
+                                    print("${tech['naziv']} selected!");
+                                    currentTech = tech['naziv'];
+                                    UrlImage = tech['slika'];
+                                    getCurrentTech();
+                                    getUrlImage();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => MainArticle()),
+                                      );
+                                  },
                                   child: Container(
                                     height: 45,
                                     width: 130,
@@ -287,7 +299,7 @@ class _HomePageState extends State<HomePage> {
         SizedBox(
           height: 120,
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('Kategorije').snapshots(),
+            stream: FirebaseFirestore.instance.collection('Kategorije').orderBy('number').snapshots(),
             builder: (context, snapshot) {
               List<GestureDetector> categoryWidgets = [];
               if (snapshot.hasData) {
@@ -414,3 +426,10 @@ class _HomePageState extends State<HomePage> {
 
   }
 
+String getCurrentTech(){
+  return currentTech;
+}
+
+String getUrlImage(){
+  return UrlImage;
+}

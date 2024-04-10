@@ -28,7 +28,10 @@ class SideMenu extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              HomePage();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
             },
             leading: const CircleAvatar(
               backgroundColor: Colors.transparent,
