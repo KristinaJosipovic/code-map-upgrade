@@ -61,56 +61,60 @@ class _MainArticleState extends State<MainArticle> {
                                     textSection(text, 'extensions'),
                                     textSection(text, 'use'),
                                     textSection(text, 'popularity'),
+                                    textSection(text, 'pros_cons'),
                                     textSection(text, 'enumeration_des'),
-                                 ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: text['enumeration'].length ~/ 2,
-                                        itemBuilder: (context, index) {
-                                          final evenIndex = index * 2;
-                                          final oddIndex = evenIndex + 1;
-                                          try {
-                                            return Card(
-                                              color: Color(
-                                                  int.parse(text['color'])),
-                                              elevation: 2,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius
-                                                    .circular(
-                                                    0.0),
-                                              ),
-                                              child: ExpansionTile(
-                                                title: Text(
-                                                    text['enumeration'][evenIndex]
-                                                        .replaceAll(
-                                                        "\\n", "\n"),
-                                                    style: const TextStyle(
-                                                        fontFamily: 'Poppins',
-                                                        color: Colors.black,
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight
-                                                            .w600
-                                                    )
-                                                ),
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .all(
-                                                        10.0),
-                                                    child: Text(
-                                                        text['enumeration'][oddIndex]
-                                                            .replaceAll(
-                                                            "\\n", "\n"),
-                                                        style: tStyle,
-                                                        textAlign: TextAlign
-                                                            .justify),
-                                                  )
-                                                ],
-                                              ),
-                                            );
-                                          }
-                                          catch (e) {} // try-catch za card
-                                        },
-                                      ),
+                                    SingleChildScrollView(
+                                   child: Column(
+                                     children: [
+                                       ListView.builder(
+                                              shrinkWrap: true,
+                                              physics: NeverScrollableScrollPhysics(),
+                                              itemCount: text['enumeration'].length ~/ 2,
+                                              itemBuilder: (context, index) {
+                                                final evenIndex = index * 2;
+                                                final oddIndex = evenIndex + 1;
+                                                try {
+                                                  return Card(
+                                                    color: Color(
+                                                        int.parse(text['color'])),
+                                                    elevation: 2,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(0.0),
+                                                    ),
+                                                    child: ExpansionTile(
+                                                      title: Text(
+                                                          text['enumeration'][evenIndex]
+                                                              .replaceAll(
+                                                              "\\n", "\n"),
+                                                          style: const TextStyle(
+                                                              fontFamily: 'Poppins',
+                                                              color: Colors.black,
+                                                              fontSize: 14,
+                                                              fontWeight: FontWeight
+                                                                  .w600
+                                                          )
+                                                      ),
+                                                      children: [
+                                                        Padding(
+                                                          padding: const EdgeInsets.all(10.0),
+                                                          child: Text(
+                                                              text['enumeration'][oddIndex]
+                                                                  .replaceAll(
+                                                                  "\\n", "\n"),
+                                                              style: tStyle,
+                                                              textAlign: TextAlign.justify
+                                                            ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
+                                                }
+                                                catch (e) {} // try-catch za card
+                                              },
+                                            ),
+                                     ],
+                                   ),
+                                 ),
                                     textSection(text, 'implementation')
                                   ]
                               )
@@ -124,14 +128,14 @@ class _MainArticleState extends State<MainArticle> {
     );
   }
 
-  SizedBox textSection(QueryDocumentSnapshot<Object?> text, String textDoc) { // kodmi ponudio da stavim sized box
+  SizedBox textSection(QueryDocumentSnapshot<Object?> text, String textDoc) {
     return SizedBox(
       height: (text[textDoc] != null && text[textDoc].isNotEmpty)
           ? null : 0.0,
       child: Text((){
-        try { return text[textDoc].replaceAll("\\n", "\n");
+        try { return text[textDoc].replaceAll("\\n", "\n").replaceAll("\\t", "\t");
         } catch (e) { return ''; }
-      }(),
+        }(),
         style: tStyle,
         textAlign: TextAlign.justify,
       ),
