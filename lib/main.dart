@@ -1,6 +1,7 @@
 import 'package:code_map/home_page.dart';
 import 'package:code_map/load_page.dart';
 import 'package:code_map/side_menu.dart';
+import 'package:code_map/user_auth/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
@@ -47,6 +48,10 @@ class _CombinedScreenState extends State<CombinedScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()), (route) => false
+      );
       setState(() {
         _showSplash = false;
       });
