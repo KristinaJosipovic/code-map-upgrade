@@ -31,23 +31,155 @@ class _MainArticleState extends State<MainArticle> {
             return Text('Dogodila se greška: ${snapshot.error}');
           } else {
             final technologiesText = snapshot.data?.docs.reversed.toList();
-            for (var text in technologiesText!) {
-                if (text['tech'] == currentTech) {
+            for (var txt in technologiesText!) {
+                if (txt['tech'] == currentTech) {
                   try {
-                    return Scaffold(
-                        drawer: const SideMenu(),
-                        appBar: AppBar(
-                          flexibleSpace: Container(
-                            decoration: BoxDecoration(
-                              color: Color(int.parse(text['color'])),
-                            ),
-                          ),
-                          title:
-                          Text(text['tech'], style: const TextStyle(
-                              fontFamily: 'Poppins', color: Colors.black,
-                              fontSize: 20, fontWeight: FontWeight.w600)),
-                        ),
-                        body: SingleChildScrollView(
+                    return DefaultTabController(
+                        length: 2,
+                      child: Scaffold(
+                              appBar: AppBar(
+                                flexibleSpace: Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(int.parse(txt['color'])),
+                                  ),
+                                ),
+                                title: Text(
+                                  txt['tech'],
+                                  style: const TextStyle(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                bottom: TabBar(
+                                  tabs: [
+                                    Tab(
+                                      child: Text(
+                                        'Tekst',
+                                        style: tStyle,
+                                      ),
+                                    ),
+                                    Tab(child: Text(
+                                      'Zadaci',
+                                      style: tStyle,
+                                    ),),
+                                  ],
+                                ),
+                              ),
+                              body: TabBarView(
+                              children: [
+                                    SingleChildScrollView(
+                                    padding: const EdgeInsets.all(12.0),
+                                            child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            children: [
+                                            textSection(txt, 'intro'),
+                                            Image.asset(
+                                            urlImage, width: 200, height: 200,),
+                                            textSection(txt, 'history'),
+                                            textSection(txt, 'interface'),
+                                            textSection(txt, 'syntax'),
+                                            textSection(txt, 'extensions'),
+                                            textSection(txt, 'use'),
+                                            textSection(txt, 'popularity'),
+                                            textSection(txt, 'pros_cons'),
+                                            textSection(txt, 'enumeration_des'),
+                                            ListCard(txt, 'enumeration', 'color'),
+                                            textSection(txt, 'implementation'),
+                                            textSection(txt, 'enumeration_des2'),
+                                            ListCard(txt, 'enumeration2', 'color'),
+                                            ]
+                                           )
+                                      ),
+                                    const Center(
+                                       child: Text('Sadržaj drugog taba'),
+                                    ),
+                               ],
+                              ),
+                             ),
+                        );
+
+                  }catch(e){}
+                }}
+            return const Text('Nema podataka za trenutnu tehnologiju');
+           }
+          },
+    );
+  }
+
+  SingleChildScrollView ListCard(QueryDocumentSnapshot<Object?> txt, String textDoc, String color) {
+    return SingleChildScrollView(
+                                 child: Column(
+                                   children: [
+                                     ListView.builder(
+                                            shrinkWrap: true,
+                                            physics: NeverScrollableScrollPhysics(),
+                                            itemCount: txt[textDoc].length ~/ 2,
+                                            itemBuilder: (context, index) {
+                                              final evenIndex = index * 2;
+                                              final oddIndex = evenIndex + 1;
+                                              try {
+                                                return Card(
+                                                  color: Color(
+                                                      int.parse(txt[color])),
+                                                  elevation: 2,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(0.0),
+                                                  ),
+                                                  child: ExpansionTile(
+                                                    title: Text(
+                                                        txt[textDoc][evenIndex]
+                                                            .replaceAll(
+                                                            "\\n", "\n"),
+                                                        style: const TextStyle(
+                                                            fontFamily: 'Poppins',
+                                                            color: Colors.black,
+                                                            fontSize: 14,
+                                                            fontWeight: FontWeight
+                                                                .w600
+                                                        )
+                                                    ),
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(10.0),
+                                                        child: Text(
+                                                            txt[textDoc][oddIndex]
+                                                                .replaceAll(
+                                                                "\\n", "\n"),
+                                                            style: tStyle,
+                                                            textAlign: TextAlign.justify
+                                                          ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              }
+                                              catch (e) {} // try-catch za card
+                                            },
+                                          ),
+                                   ],
+                                 ),
+                               );
+  }
+
+  SizedBox textSection(QueryDocumentSnapshot<Object?> txt, String textDoc) {
+    return SizedBox(
+      height: (txt[textDoc] != null && txt[textDoc].isNotEmpty)
+          ? null : 0.0,
+      child: Text((){
+        try { return txt[textDoc].replaceAll("\\n", "\n").replaceAll("\\t", "\t");
+        } catch (e) { return ''; }
+        }(),
+        style: tStyle,
+        textAlign: TextAlign.justify,
+      ),
+    );
+  }
+}
+
+
+/*body: SingleChildScrollView(
                           padding: const EdgeInsets.all(12.0),
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch, // bolje nego 'start'
@@ -63,83 +195,11 @@ class _MainArticleState extends State<MainArticle> {
                                     textSection(text, 'popularity'),
                                     textSection(text, 'pros_cons'),
                                     textSection(text, 'enumeration_des'),
-                                    SingleChildScrollView(
-                                   child: Column(
-                                     children: [
-                                       ListView.builder(
-                                              shrinkWrap: true,
-                                              physics: NeverScrollableScrollPhysics(),
-                                              itemCount: text['enumeration'].length ~/ 2,
-                                              itemBuilder: (context, index) {
-                                                final evenIndex = index * 2;
-                                                final oddIndex = evenIndex + 1;
-                                                try {
-                                                  return Card(
-                                                    color: Color(
-                                                        int.parse(text['color'])),
-                                                    elevation: 2,
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(0.0),
-                                                    ),
-                                                    child: ExpansionTile(
-                                                      title: Text(
-                                                          text['enumeration'][evenIndex]
-                                                              .replaceAll(
-                                                              "\\n", "\n"),
-                                                          style: const TextStyle(
-                                                              fontFamily: 'Poppins',
-                                                              color: Colors.black,
-                                                              fontSize: 14,
-                                                              fontWeight: FontWeight
-                                                                  .w600
-                                                          )
-                                                      ),
-                                                      children: [
-                                                        Padding(
-                                                          padding: const EdgeInsets.all(10.0),
-                                                          child: Text(
-                                                              text['enumeration'][oddIndex]
-                                                                  .replaceAll(
-                                                                  "\\n", "\n"),
-                                                              style: tStyle,
-                                                              textAlign: TextAlign.justify
-                                                            ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  );
-                                                }
-                                                catch (e) {} // try-catch za card
-                                              },
-                                            ),
-                                     ],
-                                   ),
-                                 ),
-                                    textSection(text, 'implementation')
+                                    ListCard(text, 'enumeration', 'color'),
+                                    textSection(text, 'implementation'),
+                                    textSection(text, 'enumeration_des2'),
+                                    ListCard(text, 'enumeration2', 'color'),
                                   ]
                               )
                           ),
-                        );
-                  }catch(e){}
-                }}
-            return const Text('Nema podataka za trenutnu tehnologiju');
-           }
-          },
-    );
-  }
-
-  SizedBox textSection(QueryDocumentSnapshot<Object?> text, String textDoc) {
-    return SizedBox(
-      height: (text[textDoc] != null && text[textDoc].isNotEmpty)
-          ? null : 0.0,
-      child: Text((){
-        try { return text[textDoc].replaceAll("\\n", "\n").replaceAll("\\t", "\t");
-        } catch (e) { return ''; }
-        }(),
-        style: tStyle,
-        textAlign: TextAlign.justify,
-      ),
-    );
-  }
-}
-
+                        );*/

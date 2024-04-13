@@ -50,7 +50,7 @@ class _CombinedScreenState extends State<CombinedScreen> {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()), (route) => false
+          MaterialPageRoute(builder: (context) => HomePage()), (route) => false
       );
       setState(() {
         _showSplash = false;
