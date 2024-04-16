@@ -7,6 +7,7 @@ import 'service/database.dart';
 
 String currentTech = "";
 String urlImage = "";
+String urlCompiler= "";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -210,6 +211,7 @@ class _HomePageState extends State<HomePage> {
                                     urlImage = tech['slika'];
                                     getCurrentTech();
                                     getUrlImage();
+                                    getUrlCompiler();
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(builder: (context) => MainArticle()),
@@ -424,4 +426,8 @@ String getCurrentTech(){
 
 String getUrlImage(){
   return urlImage;
+}
+
+String getUrlCompiler(){
+  return urlCompiler;
 }

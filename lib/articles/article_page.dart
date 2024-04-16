@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/home_page.dart';
 import 'package:code_map/side_menu.dart';
+import '../webCompiler/webView.dart';
 
 const TextStyle tStyle = TextStyle(
   fontFamily: 'Poppins',
@@ -20,6 +21,7 @@ class _MainArticleState extends State<MainArticle> {
 
   String currentTech = getCurrentTech();
   String urlImage = getUrlImage();
+  String urlCompiler = getUrlCompiler();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -35,7 +37,7 @@ class _MainArticleState extends State<MainArticle> {
                 if (txt['tech'] == currentTech) {
                   try {
                     return DefaultTabController(
-                        length: 2,
+                        length: 3,
                       child: Scaffold(
                               appBar: AppBar(
                                 flexibleSpace: Container(
@@ -52,7 +54,7 @@ class _MainArticleState extends State<MainArticle> {
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                bottom: TabBar(
+                                bottom: const TabBar(
                                   tabs: [
                                     Tab(
                                       child: Text(
@@ -62,6 +64,10 @@ class _MainArticleState extends State<MainArticle> {
                                     ),
                                     Tab(child: Text(
                                       'Zadaci',
+                                      style: tStyle,
+                                    ),),
+                                    Tab(child: Text(
+                                      'Kompajler',
                                       style: tStyle,
                                     ),),
                                   ],
@@ -95,6 +101,7 @@ class _MainArticleState extends State<MainArticle> {
                                     const Center(
                                        child: Text('Sadržaj drugog taba'),
                                     ),
+                                WebViewCompiler(),
                                ],
                               ),
                              ),
