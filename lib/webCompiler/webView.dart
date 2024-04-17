@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:code_map/articles/article_page.dart';
 
 class WebViewCompiler extends StatefulWidget {
-  const WebViewCompiler({super.key});
+  final String techName;
+  const WebViewCompiler(this.techName, {super.key});
 
   @override
   State<WebViewCompiler> createState() => _WebViewCompilerState();
@@ -12,14 +14,25 @@ class WebViewCompiler extends StatefulWidget {
 
 class _WebViewCompilerState extends State<WebViewCompiler> {
   late final WebViewController controller;
-
-
+  var technologies = FirebaseFirestore.instance.collection("Tehnologije");
 
   @override
   void initState() {
     super.initState();
-    controller = WebViewController()..loadRequest
-      (Uri.parse("https://www.programiz.com/python-programming/online-compiler/"),);
+    controller = WebViewController();
+
+    Future.delayed(Duration.zero, () async {
+      controller.loadRequest(Uri.parse(await getTechURL()));
+    });
+  }
+
+  Future<String> getTechURL() async {
+    var compilerURL = await technologies.where(
+        "naziv", isEqualTo: widget.techName
+    ).get();
+
+    return compilerURL.docs.first['kompajler'];
+    //return "https://stackoverflow.com/questions/51901002/is-there-a-way-to-load-async-data-on-initstate-method";
   }
 
   @override

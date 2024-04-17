@@ -101,7 +101,7 @@ class _MainArticleState extends State<MainArticle> {
                                     const Center(
                                        child: Text('Sadržaj drugog taba'),
                                     ),
-                                WebViewCompiler(),
+                                WebViewCompiler(currentTech),
                                ],
                               ),
                              ),
