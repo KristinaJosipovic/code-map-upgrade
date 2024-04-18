@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code_map/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:code_map/articles/article_page.dart';
 
 class WebViewCompiler extends StatefulWidget {
   final String techName;

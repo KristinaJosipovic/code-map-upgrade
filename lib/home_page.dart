@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../articles/article_page.dart';
-import 'service/database.dart';
 
 String currentTech = "";
 String urlImage = "";
-String urlCompiler= "";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,93 +50,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  /*Column _popularModelSection() {
-    return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                'Popular',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600
-                ),
-              ),
-            ),
-            const SizedBox(height: 15,),
-            ListView.separated(
-              separatorBuilder: (context, index) => const SizedBox(height: 25,),
-              itemCount: popularDiets.length,
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              itemBuilder: (context, index) {
-                return Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: popularDiets[index].boxIsSelected ? Colors.white : Colors.transparent,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: popularDiets[index].boxIsSelected ? [
-                      BoxShadow(
-                        color: const Color(0xff1D1617).withOpacity(0.07),
-                        offset: const Offset(0, 10),
-                        blurRadius: 40,
-                        spreadRadius: 0
-                      )
-                    ] : []
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SvgPicture.asset(
-                        popularDiets[index].iconPath,
-                        width: 65,
-                        height: 65,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            popularDiets[index].name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            '${popularDiets[index].level} | ${popularDiets[index].duration} | ${popularDiets[index].calorie}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xff7B6F72),
-                              fontSize: 13,
-                            ),
-                          )
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          setState(() {
-
-                          });
-                        },
-                        child: SvgPicture.asset(
-                          'assets/icons/button.svg',
-                          width: 30,
-                          height: 30,
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            )
-          ],
-        );
-  }*/
 
   Column _languagesFrameworksSection(String category) {
     return Column(
@@ -206,15 +117,13 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    print("${tech['naziv']} selected!");
                                     currentTech = tech['naziv'];
                                     urlImage = tech['slika'];
                                     getCurrentTech();
                                     getUrlImage();
-                                    getUrlCompiler();
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => MainArticle()),
+                                      MaterialPageRoute(builder: (context) => const MainArticle()),
                                       );
                                   },
                                   child: Container(
@@ -232,8 +141,6 @@ class _HomePageState extends State<HomePage> {
                                       child: Text(
                                         'Prikaži',
                                         style: TextStyle(
-                                          // colors should be upgraded
-                                          //color: diets[index].viewIsSelected ? Colors.white : const Color(0xffC58BF2),
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 14
@@ -245,7 +152,6 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                           );
-
                           techWidgets.add(techWidget);
                         }
                       }
@@ -302,7 +208,6 @@ class _HomePageState extends State<HomePage> {
                 for (var cat in categories!) {
                   final categoryWidget = GestureDetector(
                     onTap: () {
-                      print(cat['name'] + ' clicked!');
                       currentCategory = cat['name'];
                       setState(() {});
                     },
@@ -311,6 +216,7 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                         color: Color(int.parse(cat['boxColor'])).withOpacity(0.7),
                         borderRadius: BorderRadius.circular(20),
+                        // srediti
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -426,8 +332,4 @@ String getCurrentTech(){
 
 String getUrlImage(){
   return urlImage;
-}
-
-String getUrlCompiler(){
-  return urlCompiler;
 }

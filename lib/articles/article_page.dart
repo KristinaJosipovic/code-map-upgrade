@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/home_page.dart';
-import 'package:code_map/side_menu.dart';
 import '../webCompiler/webView.dart';
 
 const TextStyle tStyle = TextStyle(
@@ -21,7 +20,7 @@ class _MainArticleState extends State<MainArticle> {
 
   String currentTech = getCurrentTech();
   String urlImage = getUrlImage();
-  String urlCompiler = getUrlCompiler();
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -121,7 +120,7 @@ class _MainArticleState extends State<MainArticle> {
                                    children: [
                                      ListView.builder(
                                             shrinkWrap: true,
-                                            physics: NeverScrollableScrollPhysics(),
+                                            physics: const NeverScrollableScrollPhysics(),
                                             itemCount: txt[textDoc].length ~/ 2,
                                             itemBuilder: (context, index) {
                                               final evenIndex = index * 2;
