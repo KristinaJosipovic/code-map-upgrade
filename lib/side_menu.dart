@@ -14,9 +14,9 @@ class SideMenu extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           const UserAccountsDrawerHeader(
-                accountName: Text('',
+                accountName: Text('Kristina Josipović',
                   style: TextStyle(fontFamily: 'Poppins', color: Colors.black),),
-                accountEmail: Text('',
+                accountEmail: Text('kristinajosipovic21@gmail.com',
                   style: TextStyle(fontFamily: 'Poppins', color: Colors.black),),
                 decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -94,7 +94,7 @@ class SideMenu extends StatelessWidget {
                 "Help", style: TextStyle(
               fontFamily: 'Poppins',)),
           ),
-         /* ListTile(
+          ListTile(
             onTap: () {
               print('Widget je dodirnut!');
             },
@@ -109,7 +109,7 @@ class SideMenu extends StatelessWidget {
             title: const Text(
                 "Account", style: TextStyle(
               fontFamily: 'Poppins',)),
-          ),*/
+          ),
           const Divider(),
           ListTile(
             onTap: () {

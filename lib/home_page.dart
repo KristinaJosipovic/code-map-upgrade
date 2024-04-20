@@ -2,7 +2,8 @@ import 'package:code_map/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../articles/article_page.dart';
+import 'package:code_map/articles/article_page.dart';
+import 'package:code_map/search_screen/searchScreen.dart';
 
 String currentTech = "";
 String urlImage = "";
@@ -16,8 +17,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String currentCategory = "Funkcionalno";
-
+  int _currenIndex = 0;
   Color backColor = Colors.white;
+  late Color borderColor = Colors.transparent;
 
   @override
   Widget build(BuildContext context) {
@@ -33,22 +35,43 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        title: const Text("Code <map>"),
+        title: const Text("Code <map>",
+            style: TextStyle(
+              fontFamily: 'Poppins-Medium',
+              color: Colors.black,
+              fontSize: 23,
+            )),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(onPressed:(){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SearchScreen()),
+              );
+            }, icon:
+              const Icon(
+                Icons.search,
+                size: 28,
+                color: Colors.black87,),
+            ),
+          )
+        ],
       ),
       backgroundColor: backColor,
       body: ListView(
         children: [
-          _searchField(),
-          const SizedBox(height: 40,),
+          //_searchField(),
+          const SizedBox(height: 20,),
           _categoriesSection(),
-          const SizedBox(height: 40,),
+          const SizedBox(height: 30,),
           _languagesFrameworksSection(currentCategory),
           const SizedBox(height: 40,),
           // _popularModelSection(),
-          // const SizedBox(height: 40,),
         ],
       ),
-    );
+       );
   }
 
   Column _languagesFrameworksSection(String category) {
@@ -63,6 +86,7 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
+                  fontFamily: 'Poppins',
                 ),
               ),
             ),
@@ -100,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                                     Text(
                                       tech['naziv'],
                                       style: const TextStyle(
+                                          fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black,
                                           fontSize: 16
@@ -108,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                                     const Text(
                                       'To be added', // change the text
                                       style: TextStyle(
+                                          fontFamily: 'Poppins',
                                           color: Color(0xff7B6F72),
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400
@@ -119,11 +145,9 @@ class _HomePageState extends State<HomePage> {
                                   onTap: () {
                                     currentTech = tech['naziv'];
                                     urlImage = tech['slika'];
-                                    getCurrentTech();
-                                    getUrlImage();
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => const MainArticle()),
+                                      MaterialPageRoute(builder: (context) => MainArticle(currentTech: currentTech, imageUrl: urlImage,)),
                                       );
                                   },
                                   child: Container(
@@ -141,6 +165,7 @@ class _HomePageState extends State<HomePage> {
                                       child: Text(
                                         'Prikaži',
                                         style: TextStyle(
+                                            fontFamily: 'Poppins',
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 14
@@ -190,6 +215,7 @@ class _HomePageState extends State<HomePage> {
           child: Text(
             'Kategorije',
             style: TextStyle(
+              fontFamily: 'Poppins',
               color: Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -198,7 +224,7 @@ class _HomePageState extends State<HomePage> {
         ),
         const SizedBox(height: 15,),
         SizedBox(
-          height: 120,
+          height: 140,
           child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('Kategorije').orderBy('number').snapshots(),
             builder: (context, snapshot) {
@@ -212,11 +238,16 @@ class _HomePageState extends State<HomePage> {
                       setState(() {});
                     },
                     child: Container(
-                      width: 100,
+                      width: 120,
                       decoration: BoxDecoration(
-                        color: Color(int.parse(cat['boxColor'])).withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(20),
-                        // srediti
+                        color: currentCategory == cat['name']
+                            ?  Color(int.parse(cat['boxColor'])).withOpacity(0.4)
+                            : Color(int.parse(cat['boxColor'])).withOpacity(0.7),
+                             borderRadius: BorderRadius.circular(20),
+                             border: Border.all(
+                                 color:  currentCategory == cat['name']
+                                 ? Colors.black.withOpacity(0.5)
+                                 : Color(int.parse(cat['boxColor'])).withOpacity(0.7), width: 2),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -237,6 +268,7 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             cat['name'],
                             style: const TextStyle(
+                                fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                                 fontSize: 14
@@ -269,7 +301,7 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
-
+/*
   Container _searchField() {
     return Container(
           margin: const EdgeInsets.only(top: 40, left: 20, right: 20),
@@ -283,12 +315,20 @@ class _HomePageState extends State<HomePage> {
             ]
           ),
           child: TextField(
+            onTap: (){
+              Navigator.push(
+                     context,
+                    MaterialPageRoute(
+                    builder: (context) => SearchScreen()),
+              );
+            },
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,
               contentPadding: const EdgeInsets.all(15),
               hintText: 'Pretraži...',
               hintStyle: const TextStyle(
+                  fontFamily: 'Poppins',
                 color: Color(0xffDDDADA),
                 fontSize: 14
               ),
@@ -323,13 +363,65 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         );
+  }*/
+  /*_bottomNavigationBar() {
+    return BottomNavigationBar(
+      currentIndex: _currenIndex,
+      fixedColor: Colors.lightBlue.shade200,
+      backgroundColor: Colors.blue.shade300,
+      elevation: 4,
+      onTap: (int index) {
+        if (index == 0) {
+          setState(() {
+            _currenIndex = index;
+          });
+        } else if (index == 1) {
+          setState(() {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SideMenu()));
+          });
+        } else if (index == 2) {
+          setState(() {});
+        } else if (index == 3) {
+          setState(() {
+            _currenIndex = index;
+          });
+        } else if (index == 4) {
+          setState(() {
+            _currenIndex = index;
+          });
+        }
+      },
+      unselectedItemColor: Colors.white,
+      items: items,
+      type: BottomNavigationBarType.fixed,
+    );
   }
-}
 
-String getCurrentTech(){
-  return currentTech;
-}
-
-String getUrlImage(){
-  return urlImage;
+  // list of items
+  List<BottomNavigationBarItem> items = const [
+    BottomNavigationBarItem(
+      icon: Icon(IconlyBold.home),
+      label: "Home",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(IconlyBold.edit),
+      label: "Upload",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(
+        IconlyBold.scan,
+        color: Colors.white,
+      ),
+      label: "Scan",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(IconlyBold.notification),
+      label: "Notification",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(IconlyBold.profile),
+      label: "Profile",
+    ),
+  ];*/
 }
