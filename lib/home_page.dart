@@ -63,6 +63,7 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
+                  fontFamily: 'Poppins'
                 ),
               ),
             ),
@@ -102,7 +103,8 @@ class _HomePageState extends State<HomePage> {
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black,
-                                          fontSize: 16
+                                          fontSize: 16,
+                                          fontFamily: 'Poppins',
                                       ),
                                     ),
                                     const Text(
@@ -110,7 +112,8 @@ class _HomePageState extends State<HomePage> {
                                       style: TextStyle(
                                           color: Color(0xff7B6F72),
                                           fontSize: 13,
-                                          fontWeight: FontWeight.w400
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'Poppins',
                                       ),
                                     ),
                                   ],
@@ -143,7 +146,8 @@ class _HomePageState extends State<HomePage> {
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 14
+                                            fontSize: 14,
+                                            fontFamily: 'Poppins',
                                         ),
                                       ),
                                     ),
@@ -193,6 +197,7 @@ class _HomePageState extends State<HomePage> {
               color: Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.w600,
+              fontFamily: 'Poppins',
             ),
           ),
         ),
@@ -239,7 +244,8 @@ class _HomePageState extends State<HomePage> {
                             style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
-                                fontSize: 14
+                                fontSize: 12,
+                                fontFamily: 'Poppins',
                             ),
                           )
                         ],
@@ -290,7 +296,8 @@ class _HomePageState extends State<HomePage> {
               hintText: 'Pretraži...',
               hintStyle: const TextStyle(
                 color: Color(0xffDDDADA),
-                fontSize: 14
+                fontSize: 14,
+                fontFamily: 'Poppins',
               ),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(12),

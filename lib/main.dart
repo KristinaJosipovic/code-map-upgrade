@@ -1,5 +1,6 @@
 import 'package:code_map/home_page.dart';
 import 'package:code_map/load_page.dart';
+import 'package:code_map/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
@@ -48,7 +49,7 @@ class _CombinedScreenState extends State<CombinedScreen> {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const HomePage()), (route) => false
+          MaterialPageRoute(builder: (context) => const LogIn()), (route) => false
       );
       setState(() {
         _showSplash = false;
