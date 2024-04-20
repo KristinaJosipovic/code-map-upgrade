@@ -10,7 +10,9 @@ const TextStyle tStyle = TextStyle(
 );
 
 class MainArticle extends StatefulWidget {
-  const MainArticle({super.key});
+  const MainArticle({Key? key, required this.currentTech, required this.imageUrl}) : super(key: key);
+  final String currentTech;
+  final String imageUrl;
 
   @override
   State<MainArticle> createState() => _MainArticleState();
@@ -18,8 +20,11 @@ class MainArticle extends StatefulWidget {
 
 class _MainArticleState extends State<MainArticle> {
 
-  String currentTech = getCurrentTech();
-  String urlImage = getUrlImage();
+  @override
+  void initState() {
+    super.initState();
+    currentTech = widget.currentTech;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +48,15 @@ class _MainArticleState extends State<MainArticle> {
                                   decoration: BoxDecoration(
                                     color: Color(int.parse(txt['color'])),
                                   ),
+                                ),
+                                leading: IconButton(
+                                  icon: Icon(Icons.arrow_back),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => HomePage()),
+                                    );
+                                  },
                                 ),
                                 title: Text(
                                   txt['tech'],
@@ -81,7 +95,7 @@ class _MainArticleState extends State<MainArticle> {
                                             children: [
                                             textSection(txt, 'intro'),
                                             Image.asset(
-                                            urlImage, width: 200, height: 200,),
+                                            widget.imageUrl, width: 200, height: 200,),
                                             textSection(txt, 'history'),
                                             textSection(txt, 'interface'),
                                             textSection(txt, 'syntax'),
