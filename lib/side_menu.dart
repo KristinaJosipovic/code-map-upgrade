@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '/service/database.dart';
 import 'home_page.dart';
+import 'package:code_map/favorites_page/favoritePage.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
@@ -64,24 +65,27 @@ class SideMenu extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              print('Widget je dodirnut!');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const FavoritePage()));
             },
             leading: const CircleAvatar(
               backgroundColor: Colors.transparent,
               child: Icon(
-                CupertinoIcons.star,
+                CupertinoIcons.heart,
                 color: Colors.black,
                 size: 25,
               ),
             ),
             title: const Text(
-                "Favorite", style: TextStyle(
+                "Favoriti", style: TextStyle(
               fontFamily: 'Poppins',)),
           ),
           ListTile(
             onTap: () {
-              print('Widget je dodirnut!');
-            },
+
+                  },
             leading: const CircleAvatar(
               backgroundColor: Colors.transparent,
               child: Icon(
