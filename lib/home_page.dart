@@ -1,6 +1,5 @@
 import 'package:code_map/side_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/articles/article_page.dart';
 import 'package:code_map/search_screen/searchScreen.dart';
@@ -48,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SearchScreen()),
+                    builder: (context) => const SearchScreen()),
               );
             }, icon:
               const Icon(
@@ -69,6 +68,7 @@ class _HomePageState extends State<HomePage> {
           _languagesFrameworksSection(currentCategory),
           const SizedBox(height: 40,),
           // _popularModelSection(),
+          // const SizedBox(height: 40,),
         ],
       ),
        );
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Poppins'
                 ),
               ),
             ),
@@ -124,19 +124,19 @@ class _HomePageState extends State<HomePage> {
                                     Text(
                                       tech['naziv'],
                                       style: const TextStyle(
-                                          fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black,
-                                          fontSize: 16
+                                          fontSize: 16,
+                                          fontFamily: 'Poppins',
                                       ),
                                     ),
                                     const Text(
                                       'To be added', // change the text
                                       style: TextStyle(
-                                          fontFamily: 'Poppins',
                                           color: Color(0xff7B6F72),
                                           fontSize: 13,
-                                          fontWeight: FontWeight.w400
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'Poppins',
                                       ),
                                     ),
                                   ],
@@ -165,10 +165,10 @@ class _HomePageState extends State<HomePage> {
                                       child: Text(
                                         'Prikaži',
                                         style: TextStyle(
-                                            fontFamily: 'Poppins',
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 14
+                                            fontSize: 14,
+                                            fontFamily: 'Poppins',
                                         ),
                                       ),
                                     ),
@@ -215,10 +215,10 @@ class _HomePageState extends State<HomePage> {
           child: Text(
             'Kategorije',
             style: TextStyle(
-              fontFamily: 'Poppins',
               color: Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.w600,
+              fontFamily: 'Poppins',
             ),
           ),
         ),
@@ -268,10 +268,10 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             cat['name'],
                             style: const TextStyle(
-                                fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
-                                fontSize: 14
+                                fontSize: 14,
+                                fontFamily: 'Poppins',
                             ),
                           )
                         ],
@@ -328,9 +328,9 @@ class _HomePageState extends State<HomePage> {
               contentPadding: const EdgeInsets.all(15),
               hintText: 'Pretraži...',
               hintStyle: const TextStyle(
-                  fontFamily: 'Poppins',
                 color: Color(0xffDDDADA),
-                fontSize: 14
+                fontSize: 14,
+                fontFamily: 'Poppins',
               ),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(12),

@@ -9,6 +9,10 @@ class DatabaseMethods {
         .doc(id)
         .set(techInfoMap);
   }
+
+  Future addUser(String userId, Map<String, dynamic>  userInfoMap){
+    return FirebaseFirestore.instance.collection("User").doc(userId).set(userInfoMap);
+  }
 }
 
 Reference get firebaseStorage => FirebaseStorage.instance.ref();
