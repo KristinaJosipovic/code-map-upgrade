@@ -26,7 +26,7 @@ class _SignUpState extends State<SignUp> {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
           "Uspješno ste registrovani",
-          style: TextStyle(fontSize: 20.0),
+          style: TextStyle(fontSize: 20.0, fontFamily: 'Poppins-Medium'),
         )));
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
@@ -37,7 +37,7 @@ class _SignUpState extends State<SignUp> {
               backgroundColor: Colors.orangeAccent,
               content: Text(
                 "Šifra je preslaba",
-                style: TextStyle(fontSize: 18.0),
+                style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins-Medium'),
               )));
         } else if (e.code == "email-already-in-use") {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -56,17 +56,36 @@ class _SignUpState extends State<SignUp> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80.0),
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.blue, Colors.green],
+                ),
+              ),
+            ),
+            /*title: const Center(
+              child: const Text(
+                  'Code <map>',
+                  style: TextStyle(
+                  fontFamily: 'Poppins-Medium',
+                  color: Colors.white,
+                  fontSize: 30,
+              ),
+              ),
+            ),*/
+            ),
+        ),
         backgroundColor: Colors.white,
         body: Column(
           children: [
-            SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Image.asset(
-                  "assets/auth_icons/car.PNG",
-                  fit: BoxFit.cover,
-                )),
             const SizedBox(
-              height: 30.0,
+              height: 35.0,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -76,10 +95,10 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     Container(
                       padding:
-                          const EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
+                      const EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
                       decoration: BoxDecoration(
                           color: const Color(0xFFedf0f8),
-                          borderRadius: BorderRadius.circular(30)),
+                          borderRadius: BorderRadius.circular(15)),
                       child: TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -92,7 +111,9 @@ class _SignUpState extends State<SignUp> {
                             border: InputBorder.none,
                             hintText: "Ime",
                             hintStyle: TextStyle(
-                                color: Color(0xFFb2b7bf), fontSize: 18.0)),
+                                color: Color(0xFFb2b7bf),
+                                fontSize: 18.0,
+                                fontFamily: 'Poppins-Medium')),
                       ),
                     ),
                     const SizedBox(
@@ -103,7 +124,7 @@ class _SignUpState extends State<SignUp> {
                           const EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
                       decoration: BoxDecoration(
                           color: const Color(0xFFedf0f8),
-                          borderRadius: BorderRadius.circular(30)),
+                          borderRadius: BorderRadius.circular(15)),
                       child: TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -116,7 +137,9 @@ class _SignUpState extends State<SignUp> {
                             border: InputBorder.none,
                             hintText: "Email",
                             hintStyle: TextStyle(
-                                color: Color(0xFFb2b7bf), fontSize: 18.0)),
+                                color: Color(0xFFb2b7bf),
+                                fontSize: 18.0,
+                                fontFamily: 'Poppins-Medium')),
                       ),
                     ),
                     const SizedBox(
@@ -127,7 +150,7 @@ class _SignUpState extends State<SignUp> {
                           const EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
                       decoration: BoxDecoration(
                           color: const Color(0xFFedf0f8),
-                          borderRadius: BorderRadius.circular(30)),
+                          borderRadius: BorderRadius.circular(15)),
                       child: TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -141,7 +164,9 @@ class _SignUpState extends State<SignUp> {
 
                             hintText: "Lozinka",
                             hintStyle: TextStyle(
-                                color: Color(0xFFb2b7bf), fontSize: 18.0)),
+                                color: Color(0xFFb2b7bf),
+                                fontSize: 18.0,
+                                fontFamily: 'Poppins-Medium')),
              obscureText: true,  ),
                     ),
                     const SizedBox(
@@ -158,21 +183,29 @@ class _SignUpState extends State<SignUp> {
                         }
                         registration();
                       },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 13.0, horizontal: 30.0),
-                          decoration: BoxDecoration(
-                              color: const Color(0xFF273671),
-                              borderRadius: BorderRadius.circular(30)),
-                          child: const Center(
-                              child: Text(
-                            "Registrujte se",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22.0,
-                                fontWeight: FontWeight.w500),
-                          ))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top:20),
+                        child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 13.0, horizontal: 30.0),
+                            decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [Colors.blue, Colors.green],
+                                ),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: const Center(
+                                child: Text(
+                              "Registrujte se",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Poppins-Medium'),
+                            ))),
+                      ),
                     ),
                   ],
                 ),
@@ -184,9 +217,10 @@ class _SignUpState extends State<SignUp> {
             const Text(
               "ili se prijavite preko",
               style: TextStyle(
-                  color: Color(0xFF273671),
+                  color: Color(0xff000000),
                   fontSize: 22.0,
-                  fontWeight: FontWeight.w500),
+                  fontWeight: FontWeight.w400,
+                  fontFamily: 'Poppins-Medium'),
             ),
             const SizedBox(
               height: 30.0,
@@ -221,7 +255,8 @@ class _SignUpState extends State<SignUp> {
                     style: TextStyle(
                         color: Color(0xFF8c8e98),
                         fontSize: 18.0,
-                        fontWeight: FontWeight.w500)),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Poppins-Medium')),
                 const SizedBox(
                   width: 5.0,
                 ),
@@ -235,7 +270,8 @@ class _SignUpState extends State<SignUp> {
                     style: TextStyle(
                         color: Color(0xFF273671),
                         fontSize: 20.0,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Poppins-Medium'),
                   ),
                 ),
               ],

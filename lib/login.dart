@@ -50,17 +50,35 @@ class _LogInState extends State<LogIn> {
       child: Scaffold(
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80.0),
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.blue, Colors.green],
+                ),
+              ),
+            ),
+            /*title: const Center(
+              child: const Text(
+                  'Code <map>',
+                  style: TextStyle(
+                  fontFamily: 'Poppins-Medium',
+                  color: Colors.white,
+                  fontSize: 30,
+              ),
+              ),
+            ),*/
+          ),
+        ),
         body: Column(
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                "assets/auth_icons/car.PNG",
-                fit: BoxFit.cover,
-                ),
-            ),
             const SizedBox(
-              height: 30.0,
+              height: 40.0,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -73,7 +91,7 @@ class _LogInState extends State<LogIn> {
                           const EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
                       decoration: BoxDecoration(
                           color: const Color(0xFFedf0f8),
-                          borderRadius: BorderRadius.circular(30)),
+                          borderRadius: BorderRadius.circular(15)),
                       child: TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -86,7 +104,9 @@ class _LogInState extends State<LogIn> {
                             border: InputBorder.none,
                             hintText: "Email",
                             hintStyle: TextStyle(
-                                color: Color(0xFFb2b7bf), fontSize: 16.0, fontFamily: 'Poppins',)),
+                                color: Color(0xFFb2b7bf),
+                              fontSize: 18.0,
+                              fontFamily: 'Poppins-Medium',)),
                       ),
                     ),
                     const SizedBox(
@@ -97,7 +117,7 @@ class _LogInState extends State<LogIn> {
                           const EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
                       decoration: BoxDecoration(
                           color: const Color(0xFFedf0f8),
-                          borderRadius: BorderRadius.circular(30)),
+                          borderRadius: BorderRadius.circular(15)),
                       child: TextFormField(
                         controller: passwordcontroller,
                         validator: (value) {
@@ -110,11 +130,13 @@ class _LogInState extends State<LogIn> {
                             border: InputBorder.none,
                             hintText: "Lozinka",
                             hintStyle: TextStyle(
-                                color: Color(0xFFb2b7bf), fontSize: 16.0, fontFamily: 'Poppins',)),
+                                color: Color(0xFFb2b7bf),
+                              fontSize: 18.0,
+                              fontFamily: 'Poppins-Medium',)),
                    obscureText: true,   ),
                     ),
                     const SizedBox(
-                      height: 30.0,
+                      height: 40.0,
                     ),
                     GestureDetector(
                       onTap: (){
@@ -131,16 +153,20 @@ class _LogInState extends State<LogIn> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 13.0, horizontal: 30.0),
                           decoration: BoxDecoration(
-                              color: const Color(0xFF273671),
-                              borderRadius: BorderRadius.circular(30)),
+                                  gradient: const LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [Colors.blue, Colors.green],
+                                  ),
+                              borderRadius: BorderRadius.circular(15)),
                           child: const Center(
                               child: Text(
                             "Prijavite se",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.0,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Poppins-Medium',),
                           ))),
                     ),
                   ],
@@ -157,23 +183,23 @@ class _LogInState extends State<LogIn> {
               child: const Text("Zaboravili lozinku?",
                   style: TextStyle(
                       color: Color(0xFF8c8e98),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Poppins',)),
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Poppins-Medium',)),
             ),
             const SizedBox(
-              height: 20.0,
+              height: 15.0,
             ),
             const Text(
               "ili prijavite se preko",
               style: TextStyle(
-                  color: Color(0xFF273671),
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Poppins',),
+                  color: Color(0xff000000),
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: 'Poppins-Medium',),
             ),
             const SizedBox(
-              height: 20.0,
+              height: 25.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -212,23 +238,26 @@ class _LogInState extends State<LogIn> {
                     style: TextStyle(
                         color: Color(0xFF8c8e98),
                         fontSize: 18.0,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Poppins',)),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Poppins-Medium',)),
                 const SizedBox(
-                  width: 5.0,
+                  width: 20,
                 ),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => const SignUp()));
                   },
-                  child: const Text(
-                    "Registrujte se",
-                    style: TextStyle(
-                        color: Color(0xFF273671),
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Poppins',),
+                  child: const Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: const Text(
+                      "Registrujte se",
+                      style: TextStyle(
+                          color: Color(0xff000000),
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Poppins-medium',),
+                    ),
                   ),
                 ),
               ],
