@@ -1,7 +1,8 @@
+import 'package:code_map/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '/service/database.dart';
 import 'home_page.dart';
 
 class SideMenu extends StatelessWidget {
@@ -42,11 +43,11 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             title: const Text(
-                "Home", style: TextStyle(
+                "Početna", style: TextStyle(
               fontFamily: 'Poppins',)),
 
           ),
-          ListTile(
+          /*ListTile(
             onTap: () {
 
             },
@@ -61,7 +62,7 @@ class SideMenu extends StatelessWidget {
             title: const Text(
                 "Search", style: TextStyle(
               fontFamily: 'Poppins',)),
-          ),
+          ),*/
           ListTile(
             onTap: () {
               print('Widget je dodirnut!');
@@ -75,7 +76,7 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             title: const Text(
-                "Favorite", style: TextStyle(
+                "Omiljeni", style: TextStyle(
               fontFamily: 'Poppins',)),
           ),
           ListTile(
@@ -91,12 +92,15 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             title: const Text(
-                "Help", style: TextStyle(
+                "Pomoć", style: TextStyle(
               fontFamily: 'Poppins',)),
           ),
           ListTile(
-            onTap: () {
-              print('Widget je dodirnut!');
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              FirebaseAuth.instance.authStateChanges().listen((User? user) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+              });
             },
             leading: const CircleAvatar(
               backgroundColor: Colors.transparent,
@@ -107,7 +111,26 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             title: const Text(
-                "Account", style: TextStyle(
+                "Račun", style: TextStyle(
+              fontFamily: 'Poppins',)),
+          ),
+          ListTile(
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              FirebaseAuth.instance.authStateChanges().listen((User? user) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+              });
+            },
+            leading: const CircleAvatar(
+              backgroundColor: Colors.transparent,
+              child: Icon(
+                Icons.logout,
+                color: Colors.black,
+                size: 25,
+              ),
+            ),
+            title: const Text(
+                "Odjavite se", style: TextStyle(
               fontFamily: 'Poppins',)),
           ),
           const Divider(),
@@ -124,7 +147,7 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             title: const Text(
-                "Exit", style: TextStyle(
+                "Izlazak", style: TextStyle(
               fontFamily: 'Poppins',)),
           ),
         ],

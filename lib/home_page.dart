@@ -1,6 +1,5 @@
 import 'package:code_map/side_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/articles/article_page.dart';
 import 'package:code_map/search_screen/searchScreen.dart';
@@ -48,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SearchScreen()),
+                    builder: (context) => const SearchScreen()),
               );
             }, icon:
               const Icon(
@@ -146,8 +145,6 @@ class _HomePageState extends State<HomePage> {
                                   onTap: () {
                                     currentTech = tech['naziv'];
                                     urlImage = tech['slika'];
-                                    getCurrentTech();
-                                    getUrlImage();
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(builder: (context) => MainArticle(currentTech: currentTech, imageUrl: urlImage,)),

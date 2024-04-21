@@ -24,17 +24,17 @@ class _LogInState extends State<LogIn> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.orangeAccent,
             content: Text(
               "Ne postoji korisnik za unesenu email adresu",
               style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins',),
             )));
       } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.orangeAccent,
             content: Text(
               "Pogrešno unesena lozinka",
@@ -46,19 +46,20 @@ class _LogInState extends State<LogIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
-      body: Container(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
+        body: Column(
           children: [
-            Container(
-                width: MediaQuery.of(context).size.width,
-                child: Image.asset(
-                  "assets/auth_icons/car.PNG",
-                  fit: BoxFit.cover,
-                )),
             SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Image.asset(
+                "assets/auth_icons/car.PNG",
+                fit: BoxFit.cover,
+                ),
+            ),
+            const SizedBox(
               height: 30.0,
             ),
             Padding(
@@ -69,9 +70,9 @@ class _LogInState extends State<LogIn> {
                   children: [
                     Container(
                       padding:
-                          EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
+                          const EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
                       decoration: BoxDecoration(
-                          color: Color(0xFFedf0f8),
+                          color: const Color(0xFFedf0f8),
                           borderRadius: BorderRadius.circular(30)),
                       child: TextFormField(
                         validator: (value) {
@@ -81,21 +82,21 @@ class _LogInState extends State<LogIn> {
                           return null;
                         },
                         controller: mailcontroller,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Email",
                             hintStyle: TextStyle(
                                 color: Color(0xFFb2b7bf), fontSize: 16.0, fontFamily: 'Poppins',)),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30.0,
                     ),
                     Container(
                       padding:
-                          EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
+                          const EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
                       decoration: BoxDecoration(
-                          color: Color(0xFFedf0f8),
+                          color: const Color(0xFFedf0f8),
                           borderRadius: BorderRadius.circular(30)),
                       child: TextFormField(
                         controller: passwordcontroller,
@@ -105,14 +106,14 @@ class _LogInState extends State<LogIn> {
                           }
                           return null;
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Lozinka",
                             hintStyle: TextStyle(
                                 color: Color(0xFFb2b7bf), fontSize: 16.0, fontFamily: 'Poppins',)),
                    obscureText: true,   ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30.0,
                     ),
                     GestureDetector(
@@ -127,12 +128,12 @@ class _LogInState extends State<LogIn> {
                       },
                       child: Container(
                           width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 13.0, horizontal: 30.0),
                           decoration: BoxDecoration(
-                              color: Color(0xFF273671),
+                              color: const Color(0xFF273671),
                               borderRadius: BorderRadius.circular(30)),
-                          child: Center(
+                          child: const Center(
                               child: Text(
                             "Prijavite se",
                             style: TextStyle(
@@ -146,24 +147,24 @@ class _LogInState extends State<LogIn> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> ForgotPassword()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgotPassword()));
               },
-              child: Text("Zaboravili lozinku?",
+              child: const Text("Zaboravili lozinku?",
                   style: TextStyle(
                       color: Color(0xFF8c8e98),
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Poppins',)),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
-            Text(
+            const Text(
               "ili prijavite se preko",
               style: TextStyle(
                   color: Color(0xFF273671),
@@ -171,7 +172,7 @@ class _LogInState extends State<LogIn> {
                   fontWeight: FontWeight.w500,
                   fontFamily: 'Poppins',),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             Row(
@@ -213,15 +214,15 @@ class _LogInState extends State<LogIn> {
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Poppins',)),
-                SizedBox(
+                const SizedBox(
                   width: 5.0,
                 ),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => SignUp()));
+                        MaterialPageRoute(builder: (context) => const SignUp()));
                   },
-                  child: Text(
+                  child: const Text(
                     "Registrujte se",
                     style: TextStyle(
                         color: Color(0xFF273671),
