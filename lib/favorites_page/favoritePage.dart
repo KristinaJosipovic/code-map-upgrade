@@ -94,6 +94,7 @@ class _FavoritePageState extends State<FavoritePage> {
                   color: Color(0xae000000),
                   width: 4,
                 ),
+
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
