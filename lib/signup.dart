@@ -12,14 +12,14 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   String email = "", password = "", name = "";
-  TextEditingController namecontroller = new TextEditingController();
-  TextEditingController passwordcontroller = new TextEditingController();
-  TextEditingController mailcontroller = new TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController mailController = TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
 
   registration() async {
-    if (password != null && namecontroller.text!=""&& mailcontroller.text!="") {
+    if (password != null && nameController.text!=""&& mailController.text!="") {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
@@ -56,34 +56,16 @@ class _SignUpState extends State<SignUp> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(80.0),
-          child: AppBar(
-            automaticallyImplyLeading: false,
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Colors.blue, Colors.green],
-                ),
-              ),
-            ),
-            /*title: const Center(
-              child: const Text(
-                  'Code <map>',
-                  style: TextStyle(
-                  fontFamily: 'Poppins-Medium',
-                  color: Colors.white,
-                  fontSize: 30,
-              ),
-              ),
-            ),*/
-            ),
-        ),
         backgroundColor: Colors.white,
         body: Column(
           children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Image.asset(
+                "assets/auth_icons/app_logo.png",
+                fit: BoxFit.cover,
+              ),
+            ),
             const SizedBox(
               height: 35.0,
             ),
@@ -106,7 +88,7 @@ class _SignUpState extends State<SignUp> {
                           }
                           return null;
                         },
-                        controller: namecontroller,
+                        controller: nameController,
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Ime",
@@ -132,7 +114,7 @@ class _SignUpState extends State<SignUp> {
                           }
                           return null;
                         },
-                        controller: mailcontroller,
+                        controller: mailController,
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Email",
@@ -158,7 +140,7 @@ class _SignUpState extends State<SignUp> {
                           }
                           return null;
                         },
-                        controller: passwordcontroller,
+                        controller: passwordController,
                         decoration: const InputDecoration(
                             border: InputBorder.none,
 
@@ -176,9 +158,9 @@ class _SignUpState extends State<SignUp> {
                       onTap: (){
                         if(_formkey.currentState!.validate()){
                           setState(() {
-                            email=mailcontroller.text;
-                            name= namecontroller.text;
-                            password=passwordcontroller.text;
+                            email=mailController.text;
+                            name= nameController.text;
+                            password=passwordController.text;
                           });
                         }
                         registration();

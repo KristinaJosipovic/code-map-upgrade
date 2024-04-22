@@ -15,8 +15,8 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   String email = "", password = "";
 
-  TextEditingController mailcontroller = new TextEditingController();
-  TextEditingController passwordcontroller = new TextEditingController();
+  TextEditingController mailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
 
@@ -24,7 +24,7 @@ class _LogInState extends State<LogIn> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomePage()), (route) => false);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -50,35 +50,17 @@ class _LogInState extends State<LogIn> {
       child: Scaffold(
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(80.0),
-          child: AppBar(
-            automaticallyImplyLeading: false,
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Colors.blue, Colors.green],
-                ),
-              ),
-            ),
-            /*title: const Center(
-              child: const Text(
-                  'Code <map>',
-                  style: TextStyle(
-                  fontFamily: 'Poppins-Medium',
-                  color: Colors.white,
-                  fontSize: 30,
-              ),
-              ),
-            ),*/
-          ),
-        ),
         body: Column(
           children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Image.asset(
+                "assets/auth_icons/app_logo.png",
+                fit: BoxFit.cover,
+              ),
+            ),
             const SizedBox(
-              height: 40.0,
+              height: 35.0,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -99,7 +81,7 @@ class _LogInState extends State<LogIn> {
                           }
                           return null;
                         },
-                        controller: mailcontroller,
+                        controller: mailController,
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Email",
@@ -119,7 +101,7 @@ class _LogInState extends State<LogIn> {
                           color: const Color(0xFFedf0f8),
                           borderRadius: BorderRadius.circular(15)),
                       child: TextFormField(
-                        controller: passwordcontroller,
+                        controller: passwordController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Molimo unesite lozinku';
@@ -142,8 +124,8 @@ class _LogInState extends State<LogIn> {
                       onTap: (){
                         if(_formkey.currentState!.validate()){
                           setState(() {
-                            email= mailcontroller.text;
-                            password=passwordcontroller.text;
+                            email= mailController.text;
+                            password=passwordController.text;
                           });
                         }
                         userLogin();
@@ -249,8 +231,8 @@ class _LogInState extends State<LogIn> {
                         MaterialPageRoute(builder: (context) => const SignUp()));
                   },
                   child: const Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: const Text(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
                       "Registrujte se",
                       style: TextStyle(
                           color: Color(0xff000000),
