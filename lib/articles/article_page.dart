@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/home_page.dart';
@@ -21,13 +22,13 @@ class MainArticle extends StatefulWidget {
 class _MainArticleState extends State<MainArticle> {
 
   @override
-  void initState() {
-    super.initState();
-    currentTech = widget.currentTech;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {
+      currentTech = widget.currentTech;
+      super.initState();
+    }
+
     return StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance.collection('Tekst').snapshots(),
           builder: (context, snapshot) {
@@ -41,7 +42,7 @@ class _MainArticleState extends State<MainArticle> {
                 if (txt['tech'] == currentTech) {
                   try {
                     return DefaultTabController(
-                        length: 3,
+                        length: 2,
                       child: Scaffold(
                               appBar: AppBar(
                                 flexibleSpace: Container(
@@ -58,6 +59,17 @@ class _MainArticleState extends State<MainArticle> {
                                     );
                                   },
                                 ),
+                                actions: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.favorite_border, color: Colors.black),
+                                      onPressed: () {
+
+                                      },
+                                    ),
+                                  ),
+                                ],
                                 title: Text(
                                   txt['tech'],
                                   style: const TextStyle(
@@ -75,10 +87,6 @@ class _MainArticleState extends State<MainArticle> {
                                         style: tStyle,
                                       ),
                                     ),
-                                    Tab(child: Text(
-                                      'Zadaci',
-                                      style: tStyle,
-                                    ),),
                                     Tab(child: Text(
                                       'Kompajler',
                                       style: tStyle,
@@ -111,10 +119,7 @@ class _MainArticleState extends State<MainArticle> {
                                             ]
                                            )
                                       ),
-                                    const Center(
-                                       child: Text('Sadržaj drugog taba'),
-                                    ),
-                                WebViewCompiler(currentTech),
+                                WebViewCompiler(widget.currentTech),
                                ],
                               ),
                              ),

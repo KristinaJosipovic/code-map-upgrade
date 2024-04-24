@@ -38,7 +38,7 @@ class _FavoritePageState extends State<FavoritePage> {
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -47,7 +47,7 @@ class _FavoritePageState extends State<FavoritePage> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.push(
               context,
@@ -56,7 +56,7 @@ class _FavoritePageState extends State<FavoritePage> {
           },
         ),
         title: const Text(
-          'Favoriti',
+          'Omiljeni',
           style: TextStyle(
             fontFamily: 'Poppins-Medium',
             color: Colors.black,
@@ -67,7 +67,7 @@ class _FavoritePageState extends State<FavoritePage> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: IconButton(
-              icon: Icon(Icons.favorite_border, color: Colors.black),
+              icon: const Icon(Icons.favorite_border, color: Colors.black),
               onPressed: () {
               },
             ),
