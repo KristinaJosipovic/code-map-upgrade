@@ -24,7 +24,7 @@ class _LogInState extends State<LogIn> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomePage()), (route) => false);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -173,7 +173,7 @@ class _LogInState extends State<LogIn> {
               height: 15.0,
             ),
             const Text(
-              "ili prijavite se preko",
+              "ili nastavite bez prijave",
               style: TextStyle(
                   color: Color(0xff000000),
                   fontSize: 22.0,
@@ -183,32 +183,11 @@ class _LogInState extends State<LogIn> {
             const SizedBox(
               height: 25.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: (){
-                    AuthMethods().signInWithGoogle(context);
-                  },
-                  child: Image.asset(
-                    "assets/auth_icons/google.png",
-                    height: 45,
-                    width: 45,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                /*GestureDetector(
-                  onTap: (){
-                    AuthMethods().signInWithApple();
-                  },
-                  child: Image.asset(
-                    "assets/auth_icons/apple1.png",
-                    height: 50,
-                    width: 50,
-                    fit: BoxFit.cover,
-                  ),
-                )*/
-              ],
+            GestureDetector(
+              onTap: (){
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
+                },
+              child: Icon(Icons.account_circle, size: 80),
             ),
             const SizedBox(
               height: 20.0,

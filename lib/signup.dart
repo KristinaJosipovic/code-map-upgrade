@@ -33,6 +33,7 @@ class _SignUpState extends State<SignUp> {
             context, MaterialPageRoute(builder: (context) => const HomePage()));
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
+          print("Šifra je preslaba");
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               backgroundColor: Colors.orangeAccent,
               content: Text(
@@ -40,6 +41,7 @@ class _SignUpState extends State<SignUp> {
                 style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins-Medium'),
               )));
         } else if (e.code == "email-already-in-use") {
+          print("Račun već postoji");
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               backgroundColor: Colors.orangeAccent,
               content: Text(
@@ -192,40 +194,6 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 40.0,
-            ),
-            const Text(
-              "ili se prijavite preko",
-              style: TextStyle(
-                  color: Color(0xff000000),
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'Poppins-Medium'),
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/auth_icons/google.png",
-                  height: 45,
-                  width: 45,
-                  fit: BoxFit.cover,
-                ),
-                const SizedBox(
-                  width: 30.0,
-                ),
-                Image.asset(
-                  "assets/auth_icons/apple1.png",
-                  height: 50,
-                  width: 50,
-                  fit: BoxFit.cover,
-                )
-              ],
             ),
             const SizedBox(
               height: 40.0,
