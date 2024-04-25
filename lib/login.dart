@@ -1,6 +1,5 @@
 import 'package:code_map/forgot_password.dart';
 import 'package:code_map/home_page.dart';
-import 'package:code_map/service/auth.dart';
 import 'package:code_map/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

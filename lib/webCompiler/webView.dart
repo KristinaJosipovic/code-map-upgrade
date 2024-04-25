@@ -49,12 +49,10 @@ class _WebViewCompilerState extends State<WebViewCompiler> {
 
   @override
   Widget build(BuildContext context) {
-    if(isLogin == true) {
-      return Scaffold(
+    return isLogin ? Scaffold(
         body: MyWebView(controller: controller),
-      );
-    }else{
-      return Scaffold(
+      ) :
+    Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -110,12 +108,8 @@ class _WebViewCompilerState extends State<WebViewCompiler> {
           ],
         ),
       );
-
-
-
     }
   }
-}
 
 class MyWebView extends StatefulWidget {
   const MyWebView({super.key, required this.controller});
