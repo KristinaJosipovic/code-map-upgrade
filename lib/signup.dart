@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/home_page.dart';
 import 'package:code_map/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +29,13 @@ class _SignUpState extends State<SignUp> {
           "Uspješno ste registrovani",
           style: TextStyle(fontSize: 20.0, fontFamily: 'Poppins-Medium'),
         )));
-        // ignore: use_build_context_synchronously
+        FirebaseFirestore.instance.collection("Korisnici").add({
+          'uid': userCredential.user?.uid,
+          'name': name,
+          'email': email,
+          'date_created': DateTime.timestamp(),
+          'favourites': []
+        });
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const HomePage()));
       } on FirebaseAuthException catch (e) {

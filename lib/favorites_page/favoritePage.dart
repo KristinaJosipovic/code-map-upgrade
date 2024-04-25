@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:code_map/search_screen/language_names.dart';
 import 'package:code_map/home_page.dart';
+
+import '../login.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key? key}) : super(key: key);
@@ -13,11 +16,24 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   late List<Names> namesList = [];
   late List<Names> tempList = [];
+  var auth = FirebaseAuth.instance;
+  var isLogin = false;
+
+  checkIfLogin() async {
+    auth.authStateChanges().listen((User? user) {
+      if (user != null && mounted) {
+        setState(() {
+          isLogin = true;
+        });
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     _getNamesFromFirestore();
+    checkIfLogin();
   }
 
   void _getNamesFromFirestore() async {
@@ -35,7 +51,8 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return !isLogin ? const NotLoggedInScreen() :
+    Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -133,6 +150,72 @@ class _FavoritePageState extends State<FavoritePage> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class NotLoggedInScreen extends StatelessWidget {
+  const NotLoggedInScreen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            "Za korištenje ove opcije morate biti prijavljeni!\n\nŽelite li se prijaviti?",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Poppins-Medium',
+              fontSize: 24,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LogIn()),
+                );
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 30.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: Colors.black),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: const Text(
+                  "Prijavite se",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Poppins-Medium',
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
