@@ -1,4 +1,6 @@
+import 'package:code_map/help.dart';
 import 'package:code_map/login.dart';
+import 'package:code_map/search_screen/searchScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,9 +50,12 @@ class SideMenu extends StatelessWidget {
               fontFamily: 'Poppins',)),
 
           ),
-          /*ListTile(
+          ListTile(
             onTap: () {
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchScreen()),
+              );
             },
             leading: const CircleAvatar(
               backgroundColor: Colors.transparent,
@@ -61,9 +66,9 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             title: const Text(
-                "Search", style: TextStyle(
+                "Pretraži", style: TextStyle(
               fontFamily: 'Poppins',)),
-          ),*/
+          ),
           ListTile(
             onTap: () {
               Navigator.push(
@@ -85,7 +90,10 @@ class SideMenu extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              print('Widget je dodirnut!');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HelpPage()),
+              );
             },
             leading: const CircleAvatar(
               backgroundColor: Colors.transparent,

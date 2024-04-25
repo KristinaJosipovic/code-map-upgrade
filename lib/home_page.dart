@@ -84,9 +84,9 @@ class _HomePageState extends State<HomePage> {
                 'Jezici i framework-ovi',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  fontFamily: 'Poppins'
+                  fontFamily: 'Poppins-Medium'
                 ),
               ),
             ),
@@ -126,17 +126,8 @@ class _HomePageState extends State<HomePage> {
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black,
-                                          fontSize: 16,
-                                          fontFamily: 'Poppins',
-                                      ),
-                                    ),
-                                    const Text(
-                                      'To be added', // change the text
-                                      style: TextStyle(
-                                          color: Color(0xff7B6F72),
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: 'Poppins',
+                                          fontSize: 18,
+                                          fontFamily: 'Poppins-Medium',
                                       ),
                                     ),
                                   ],
@@ -167,8 +158,8 @@ class _HomePageState extends State<HomePage> {
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 14,
-                                            fontFamily: 'Poppins',
+                                            fontSize: 15,
+                                            fontFamily: 'Poppins-Medium',
                                         ),
                                       ),
                                     ),
@@ -216,9 +207,9 @@ class _HomePageState extends State<HomePage> {
             'Kategorije',
             style: TextStyle(
               color: Colors.black,
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.w600,
-              fontFamily: 'Poppins',
+              fontFamily: 'Poppins-Medium',
             ),
           ),
         ),
@@ -270,8 +261,8 @@ class _HomePageState extends State<HomePage> {
                             style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
-                                fontSize: 14,
-                                fontFamily: 'Poppins',
+                                fontSize: 16,
+                                fontFamily: 'Poppins-Medium',
                             ),
                           )
                         ],
