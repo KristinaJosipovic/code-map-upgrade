@@ -50,12 +50,9 @@ class _WebViewCompilerState extends State<WebViewCompiler> {
 
   @override
   Widget build(BuildContext context) {
-    if(isLogin == true) {
-      return Scaffold(
+      return isLogin ? Scaffold(
         body: MyWebView(controller: controller),
-      );
-    }else{
-      return Scaffold(
+      ) : Scaffold(
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(5.0),
@@ -117,10 +114,7 @@ class _WebViewCompilerState extends State<WebViewCompiler> {
         ),
       );
 
-
-
     }
-  }
 }
 
 class MyWebView extends StatefulWidget {
