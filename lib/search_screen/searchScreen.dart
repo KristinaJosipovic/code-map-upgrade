@@ -135,9 +135,9 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: Text(
                               name.name,
                               style: const TextStyle(
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Medium',
                                 color: Colors.black45,
-                                fontSize: 14,
+                                fontSize: 15,
                               ),
                             ),
                           ),
@@ -173,8 +173,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         "Prijedlozi za pretraživanje",
                         style: TextStyle(
                           color: Colors.black,
-                          fontFamily: 'Poppins',
-                          fontSize: 19,
+                          fontFamily: 'Poppins-Medium',
+                          fontSize: 20,
                         ),
                       ),
                       const SizedBox(
@@ -231,7 +231,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 previousSearchs[index],
                 style: const TextStyle(
                   color: Colors.black,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Poppins-Medium',
                   fontSize: 13,
                 ),
               ),
@@ -258,7 +258,7 @@ class _SearchScreenState extends State<SearchScreen> {
         text,
         style: const TextStyle(
           color: Colors.black,
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Medium',
           fontSize: 14,
         ),
       ),

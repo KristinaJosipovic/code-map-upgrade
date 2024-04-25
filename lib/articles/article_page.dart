@@ -5,7 +5,7 @@ import 'package:code_map/home_page.dart';
 import '../webCompiler/webView.dart';
 
 const TextStyle tStyle = TextStyle(
-  fontFamily: 'Poppins',
+  fontFamily: 'Poppins-Medium',
   color: Colors.black,
   fontSize: 14,
 );
@@ -78,7 +78,7 @@ class _MainArticleState extends State<MainArticle> {
                                 title: Text(
                                   txt['tech'],
                                   style: const TextStyle(
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Poppins-Medium',
                                     color: Colors.black,
                                     fontSize: 20,
                                     fontWeight: FontWeight.w600,
@@ -124,7 +124,7 @@ class _MainArticleState extends State<MainArticle> {
                                             ]
                                            )
                                       ),
-                                WebViewCompiler(widget.currentTech),
+                                WebViewCompiler(widget.currentTech, txt['color']),
                                ],
                               ),
                              ),
