@@ -23,11 +23,6 @@ class _MainArticleState extends State<MainArticle> {
 
   @override
   Widget build(BuildContext context) {
-    @override
-    void initState() {
-      currentTech = widget.currentTech;
-      super.initState();
-    }
 
     return StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance.collection('Tekst').snapshots(),
@@ -39,7 +34,7 @@ class _MainArticleState extends State<MainArticle> {
           } else {
             final technologiesText = snapshot.data?.docs.reversed.toList();
             for (var txt in technologiesText!) {
-                if (txt['tech'] == currentTech) {
+                if (txt['tech'] == widget.currentTech) {
                   try {
                     return DefaultTabController(
                         length: 2,
@@ -65,7 +60,17 @@ class _MainArticleState extends State<MainArticle> {
                                     child: IconButton(
                                       icon: const Icon(Icons.favorite_border, color: Colors.black),
                                       onPressed: () {
-
+                                        FirebaseFirestore.instance.collection("Korisnici")
+                                            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+                                            .get()
+                                            .then((QuerySnapshot querySnapshot) {
+                                              var docRef = querySnapshot.docs.first.reference;
+                                              docRef.update({
+                                                'favourites': FieldValue.arrayUnion([txt['tech']])
+                                              })
+                                              .then((_) => print("Added ${txt['tech']}"))
+                                              .catchError((error) => print("Add failed: $error"));
+                                        });
                                       },
                                     ),
                                   ),
