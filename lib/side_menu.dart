@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/help.dart';
 import 'package:code_map/login.dart';
 import 'package:code_map/search_screen/searchScreen.dart';
@@ -11,6 +12,30 @@ import 'package:code_map/favorites_page/favoritePage.dart';
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
 
+  Future<Map<String, dynamic>> getUserData() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
+          .collection('Korisnici')
+          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        Map<String, dynamic> userData = querySnapshot.docs.first.data();
+        return {
+          'name': userData['name'],
+          'email': userData['email'],
+        };
+      } else {
+        print('No matching documents found');
+        return {};
+      }
+    } catch (e) {
+      print('Error retrieving user data: $e');
+      return {};
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -18,7 +43,7 @@ class SideMenu extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           const UserAccountsDrawerHeader(
-                accountName: Text('Kristina Josipović',
+                accountName: Text("Kristina Josipović",
                   style: TextStyle(fontFamily: 'Poppins', color: Colors.black),),
                 accountEmail: Text('kristinajosipovic21@gmail.com',
                   style: TextStyle(fontFamily: 'Poppins', color: Colors.black),),

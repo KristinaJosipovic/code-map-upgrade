@@ -20,6 +20,59 @@ class MainArticle extends StatefulWidget {
 }
 
 class _MainArticleState extends State<MainArticle> {
+  IconData favIcon = Icons.favorite_border;
+  List<String> userFavourites = [];
+  var isLogin = false;
+
+  checkIfLogin() async {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null && mounted) {
+        setState(() {
+          isLogin = true;
+        });
+      }
+    });
+  }
+
+  Future<void> _getUserFavourites(String userId) async {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
+          .collection('Korisnici')
+          .where('uid', isEqualTo: userId)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+            querySnapshot.docs.first;
+        Map<String, dynamic> data = docSnapshot.data()!;
+        List<String> arrayData = List<String>.from(data['favourites'] ?? []);
+        setState(() {
+          userFavourites = arrayData;
+        });
+      } else {
+        print('No matching documents found');
+        return;
+      }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfLogin();
+    try {
+      Future.delayed(Duration.zero, () async {
+        await _getUserFavourites(FirebaseAuth.instance.currentUser!.uid);
+        if (userFavourites.contains(widget.currentTech)) {
+          setState(() {
+            favIcon = Icons.favorite;
+          });
+        }
+        else {
+          favIcon = Icons.favorite_outline;
+        }
+      });
+    }
+    catch (e) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,25 +108,55 @@ class _MainArticleState extends State<MainArticle> {
                                   },
                                 ),
                                 actions: [
+                                  isLogin ?
                                   Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: IconButton(
-                                      icon: const Icon(Icons.favorite_border, color: Colors.black),
+                                      icon: Icon(favIcon, color: Colors.black),
                                       onPressed: () {
+                                        print(FirebaseAuth.instance.currentUser?.uid);
                                         FirebaseFirestore.instance.collection("Korisnici")
                                             .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
                                             .get()
                                             .then((QuerySnapshot querySnapshot) {
                                               var docRef = querySnapshot.docs.first.reference;
-                                              docRef.update({
+                                              if (favIcon == Icons.favorite_outline) {
+                                                setState(() {
+                                                  favIcon = Icons.favorite;
+                                                });
+                                                docRef.update({
                                                 'favourites': FieldValue.arrayUnion([txt['tech']])
                                               })
                                               .then((_) => print("Added ${txt['tech']}"))
                                               .catchError((error) => print("Add failed: $error"));
+                                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                                    backgroundColor: Colors.green,
+                                                    content: Text(
+                                                      "Dodano u omiljeno!",
+                                                      style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins',),
+                                                    )));
+                                              }
+                                              else {
+                                                setState(() {
+                                                  favIcon = Icons.favorite_outline;
+                                                });
+                                                docRef.update({
+                                                  'favourites': FieldValue.arrayRemove([txt['tech']])
+                                                })
+                                                    .then((_) => print("Added ${txt['tech']}"))
+                                                    .catchError((error) => print("Add failed: $error"));
+                                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                                    duration: Duration(seconds: 2),
+                                                    backgroundColor: Colors.red,
+                                                    content: Text(
+                                                      "Uklonjeno iz omilienog!",
+                                                      style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins',),
+                                                    )));
+                                              }
                                         });
                                       },
                                     ),
-                                  ),
+                                  ) : Container(),
                                 ],
                                 title: Text(
                                   txt['tech'],

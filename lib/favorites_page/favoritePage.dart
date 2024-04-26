@@ -116,70 +116,86 @@ class _FavoritePageState extends State<FavoritePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 5, right: 5, bottom: 20),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20.0,
-            crossAxisSpacing: 20.0,
-            childAspectRatio: 0.8,
-          ),
+        child: ListView.builder(
           itemCount: namesList.length,
           itemBuilder: (context, index) {
             final tech = namesList[index];
-            return GestureDetector(
-              onTap: () { // TODO: to be implemented
-                print([tech.name, tech.imageUrl]);
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>
-                    MainArticle(currentTech: tech.name, imageUrl: tech.imageUrl,)),
-              );
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(
-                    color: Color(0xae000000),
-                    width: 4,
-                  ),
-
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 7,
-                      offset: Offset(0,3),
+            return Row(
+              children: [
+                GestureDetector(
+                onTap: () {
+                  print([tech.name, tech.imageUrl]);
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      MainArticle(currentTech: tech.name, imageUrl: tech.imageUrl,)),
+                );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: Color(0xae000000),
+                      width: 4,
                     ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 110, // Širina slike
-                      height: 110, // Visina slike
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Image.asset(
-                          tech.imageUrl,
-                          //fit: BoxFit.cover,
+
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: Offset(0,3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 80, // Širina slike
+                        height: 80, // Visina slike
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.asset(
+                            tech.imageUrl,
+                            //fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      tech.name,
-                      style: const TextStyle(
-                        fontFamily: 'Poppins-Medium',
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                        fontSize: 16,
+                      const SizedBox(height: 10),
+                      Text(
+                        tech.name,
+                        style: const TextStyle(
+                          fontFamily: 'Poppins-Medium',
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  iconSize: 50,
+                  onPressed: () {
+                    FirebaseFirestore.instance.collection("Korisnici")
+                        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+                        .get()
+                        .then((QuerySnapshot querySnapshot) {
+                    var docRef = querySnapshot.docs.first.reference;
+                    docRef.update({
+                    'favourites': FieldValue.arrayRemove([namesList[index].name])
+                    })
+                        .then((_) => print("Removed ${namesList[index].name}"))
+                        .catchError((error) => print("Removal failed: $error"));
+                    },
+                  );
+                }
+                )
+            ]
             );
           },
         ),
