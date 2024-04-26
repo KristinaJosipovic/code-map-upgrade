@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/home_page.dart';
 import '../bottomNavigationBar.dart';
 import '../webCompiler/webView.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 const TextStyle tStyle = TextStyle(
   fontFamily: 'Poppins-Medium',

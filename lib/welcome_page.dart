@@ -54,9 +54,8 @@ class _WelcomePageState extends State<WelcomePage> {
                   margin: const EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                     color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                     border: Border.all(color: Colors.white),
-
                   ),
                   child: const Center(
                     child: Text(
@@ -88,7 +87,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   margin: const EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   child: const Center(
                     child: Text(

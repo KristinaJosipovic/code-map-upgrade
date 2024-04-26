@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/help.dart';
-import 'package:code_map/login.dart';
 import 'package:code_map/search_screen/searchScreen.dart';
+import 'package:code_map/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +136,7 @@ class SideMenu extends StatelessWidget {
             onTap: () async {
               await FirebaseAuth.instance.signOut();
               FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const LogIn()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
               });
             },
             leading: const CircleAvatar(
@@ -148,14 +148,14 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             title: const Text(
-                "Račun", style: TextStyle(
+                "Prijava", style: TextStyle(
               fontFamily: 'Poppins',)),
           ),
           ListTile(
             onTap: () async {
               await FirebaseAuth.instance.signOut();
               FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const LogIn()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
               });
             },
             leading: const CircleAvatar(

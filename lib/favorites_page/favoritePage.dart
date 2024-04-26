@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:code_map/search_screen/language_names.dart';
 import 'package:code_map/home_page.dart';
-
-import '../articles/article_page.dart';
 import '../login.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -71,11 +69,11 @@ class _FavoritePageState extends State<FavoritePage> {
     CollectionReference collectionReference = FirebaseFirestore.instance.collection('Tehnologije');
     QuerySnapshot querySnapshot = await collectionReference.get();
 
-    querySnapshot.docs.forEach((doc) {
+    for (var doc in querySnapshot.docs) {
       if (userFavourites.contains(doc['naziv'])) {
         tempList.add(Names.fromFirestore(doc));
       }
-    });
+    }
 
     setState(() {
       namesList = tempList;
@@ -101,7 +99,7 @@ class _FavoritePageState extends State<FavoritePage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
@@ -120,87 +118,80 @@ class _FavoritePageState extends State<FavoritePage> {
           itemCount: namesList.length,
           itemBuilder: (context, index) {
             final tech = namesList[index];
-            return Row(
-              children: [
-                GestureDetector(
-                onTap: () {
-                  print([tech.name, tech.imageUrl]);
-                  Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>
-                      MainArticle(currentTech: tech.name, imageUrl: tech.imageUrl,)),
-                );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(
-                      color: Color(0xae000000),
-                      width: 4,
-                    ),
-
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 7,
-                        offset: Offset(0,3),
-                      ),
-                    ],
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: 350,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(
+                    color: const Color(0xae000000),
+                    width: 2,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 80, // Širina slike
-                        height: 80, // Visina slike
+                  /*boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0,
+                      blurRadius: 7,
+                      offset: Offset(0,2),
+                    ),
+                  ],*/
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 80,
+                        height: 80,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
+                          //borderRadius: BorderRadius.circular(40),
                           child: Image.asset(
                             tech.imageUrl,
-                            //fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        tech.name,
-                        style: const TextStyle(
-                          fontFamily: 'Poppins-Medium',
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      tech.name,
+                      style: const TextStyle(
+                        fontFamily: 'Poppins-Medium',
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 22,
                       ),
-                    ],
-                  ),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        FirebaseFirestore.instance.collection("Korisnici")
+                            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+                            .get()
+                            .then((QuerySnapshot querySnapshot) {
+                          var docRef = querySnapshot.docs.first.reference;
+                          docRef.update({
+                            'favourites': FieldValue.arrayRemove([tech.name])
+                          })
+                              .then((_) => print("Removed ${tech.name}"))
+                              .catchError((error) => print("Removal failed: $error"));
+                        }
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  iconSize: 50,
-                  onPressed: () {
-                    FirebaseFirestore.instance.collection("Korisnici")
-                        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-                        .get()
-                        .then((QuerySnapshot querySnapshot) {
-                    var docRef = querySnapshot.docs.first.reference;
-                    docRef.update({
-                    'favourites': FieldValue.arrayRemove([namesList[index].name])
-                    })
-                        .then((_) => print("Removed ${namesList[index].name}"))
-                        .catchError((error) => print("Removal failed: $error"));
-                    },
-                  );
-                }
-                )
-            ]
             );
           },
         ),
       ),
     );
+
+
+
   }
 }
 
@@ -232,22 +223,22 @@ class NotLoggedInScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LogIn()),
+                  MaterialPageRoute(builder: (context) => const LogIn()),
                 );
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 30.0),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white70,
+                  borderRadius: BorderRadius.circular(5),
                   border: Border.all(color: Colors.black),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
@@ -257,7 +248,7 @@ class NotLoggedInScreen extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: 'Poppins-Medium',
-                    fontSize: 24,
+                    fontSize: 22,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

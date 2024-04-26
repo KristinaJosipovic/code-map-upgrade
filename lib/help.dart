@@ -60,7 +60,7 @@ class _HelpPageState extends State<HelpPage> {
                   hintStyle: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Poppins-Medium',
-                  ), // Dodali smo hintStyle za manji font
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -80,7 +80,7 @@ class _HelpPageState extends State<HelpPage> {
                   hintStyle: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Poppins-Medium',
-                  ), // Dodali smo hintStyle za manji font
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -99,7 +99,7 @@ class _HelpPageState extends State<HelpPage> {
                   labelStyle: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Poppins-Medium',
-                  ), // Dodali smo labelStyle za manji font
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -118,7 +118,7 @@ class _HelpPageState extends State<HelpPage> {
                   labelStyle: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Poppins-Medium',
-                  ), // Dodali smo labelStyle za manji font
+                  ),
                 ),
                 maxLines: 5,
               ),
