@@ -40,9 +40,9 @@ class _FavoritePageState extends State<FavoritePage> {
     CollectionReference collectionReference = FirebaseFirestore.instance.collection('Tehnologije');
     QuerySnapshot querySnapshot = await collectionReference.get();
 
-    querySnapshot.docs.forEach((doc) {
+    for (var doc in querySnapshot.docs) {
       tempList.add(Names.fromFirestore(doc));
-    });
+    }
 
     setState(() {
       namesList = tempList;
@@ -68,7 +68,7 @@ class _FavoritePageState extends State<FavoritePage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()),
             );
           },
         ),
@@ -108,7 +108,7 @@ class _FavoritePageState extends State<FavoritePage> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
-                  color: Color(0xae000000),
+                  color: const Color(0xae000000),
                   width: 4,
                 ),
 
@@ -117,7 +117,7 @@ class _FavoritePageState extends State<FavoritePage> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 2,
                     blurRadius: 7,
-                    offset: Offset(0,3),
+                    offset: const Offset(0,3),
                   ),
                 ],
               ),
@@ -183,7 +183,7 @@ class NotLoggedInScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LogIn()),
+                  MaterialPageRoute(builder: (context) => const LogIn()),
                 );
               },
               child: Container(
@@ -198,7 +198,7 @@ class NotLoggedInScreen extends StatelessWidget {
                       color: Colors.black.withOpacity(0.2),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),

@@ -1,10 +1,10 @@
 import 'package:code_map/home_page.dart';
 import 'package:code_map/load_page.dart';
-import 'package:code_map/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
+import 'package:code_map/welcome_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +64,7 @@ class _CombinedScreenState extends State<CombinedScreen> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) =>
-          isLogin ? const HomePage() : const LogIn()), (route) => false
+          isLogin ? const HomePage() : const WelcomePage()), (route) => false
       );
       setState(() {
         _showSplash = false;
@@ -74,7 +74,7 @@ class _CombinedScreenState extends State<CombinedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return _showSplash ? const Splash() : (isLogin ? const HomePage() : const LogIn());
+    return _showSplash ? const Splash() : (isLogin ? const HomePage() : const WelcomePage());
   }
 }
 

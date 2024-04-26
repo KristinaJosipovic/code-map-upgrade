@@ -175,30 +175,8 @@ class _LogInState extends State<LogIn> {
                   ),
                 ],
               ),
-              const SizedBox(height: 15.0),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                   Text(
-                    "ili nastavite bez prijave",
-                    style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Poppins-Medium',
-                    ),
-                  ),
-                ],
-              ),
               const SizedBox(height: 20.0),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
-                },
-                child: const Icon(Icons.account_circle, size: 60),
-              ),
-              const SizedBox(height: 20.0),
-              Column(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
@@ -210,26 +188,26 @@ class _LogInState extends State<LogIn> {
                       fontFamily: 'Poppins-Medium',
                     ),
                   ),
-                  const SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignUp()));
                     },
                     child: const Padding(
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(5.0),
                       child: Text(
                         "Registrujte se",
                         style: TextStyle(
                           color: Color(0xff000000),
-                          fontSize: 20.0,
+                          fontSize: 19.0,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Poppins-medium',
                         ),
                       ),
                     ),
-                  ),
+                  )
                 ],
               )
+
             ],
           ),
         ),

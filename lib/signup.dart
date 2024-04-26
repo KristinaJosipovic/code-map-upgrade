@@ -20,7 +20,7 @@ class _SignUpState extends State<SignUp> {
   final _formkey = GlobalKey<FormState>();
 
   registration() async {
-    if (password != null && nameController.text!=""&& mailController.text!="") {
+    if (nameController.text!=""&& mailController.text!="") {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
@@ -227,8 +227,8 @@ class _SignUpState extends State<SignUp> {
                     child: const Text(
                       "Prijava",
                       style: TextStyle(
-                          color: Color(0xFF273671),
-                          fontSize: 20.0,
+                          color: Colors.black,
+                          fontSize: 19.0,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Poppins-Medium'),
                     ),

@@ -34,7 +34,7 @@ class SideMenu extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomePage()),
+                MaterialPageRoute(builder: (context) => const HomePage()),
               );
             },
             leading: const CircleAvatar(
@@ -54,7 +54,7 @@ class SideMenu extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SearchScreen()),
+                MaterialPageRoute(builder: (context) => const SearchScreen()),
               );
             },
             leading: const CircleAvatar(
@@ -92,7 +92,7 @@ class SideMenu extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HelpPage()),
+                MaterialPageRoute(builder: (context) => const HelpPage()),
               );
             },
             leading: const CircleAvatar(
@@ -111,7 +111,7 @@ class SideMenu extends StatelessWidget {
             onTap: () async {
               await FirebaseAuth.instance.signOut();
               FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const LogIn()));
               });
             },
             leading: const CircleAvatar(
@@ -130,7 +130,7 @@ class SideMenu extends StatelessWidget {
             onTap: () async {
               await FirebaseAuth.instance.signOut();
               FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const LogIn()));
               });
             },
             leading: const CircleAvatar(

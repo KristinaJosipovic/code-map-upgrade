@@ -69,14 +69,14 @@ class _WebViewCompilerState extends State<WebViewCompiler> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LogIn()),
+                        MaterialPageRoute(builder: (context) => const LogIn()),
                       );
                     },
                     child: Container(
@@ -91,7 +91,7 @@ class _WebViewCompilerState extends State<WebViewCompiler> {
                             color: Colors.black.withOpacity(0.2),
                             spreadRadius: 1,
                             blurRadius: 1,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),

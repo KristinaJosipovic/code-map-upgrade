@@ -11,10 +11,10 @@ class HelpPage extends StatefulWidget {
 }
 
 class _HelpPageState extends State<HelpPage> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _subjectController = TextEditingController();
-  TextEditingController _bodyController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _subjectController = TextEditingController();
+  final TextEditingController _bodyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _HelpPageState extends State<HelpPage> {
               ),
               TextField(
                 controller: _nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'John Doe',
                   border: OutlineInputBorder(),
                   hintStyle: TextStyle(
@@ -64,7 +64,7 @@ class _HelpPageState extends State<HelpPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Text(
+              const Text(
                 'Email:',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class _HelpPageState extends State<HelpPage> {
               ),
               TextField(
                 controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'example@example.com',
                   border: OutlineInputBorder(),
                   hintStyle: TextStyle(
@@ -84,7 +84,7 @@ class _HelpPageState extends State<HelpPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Text(
+              const Text(
                 'Predmet:',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class _HelpPageState extends State<HelpPage> {
               ),
               TextField(
                 controller: _subjectController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelStyle: TextStyle(
                     fontSize: 15,
@@ -103,7 +103,7 @@ class _HelpPageState extends State<HelpPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Text(
+              const Text(
                 'Poruka:',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -113,7 +113,7 @@ class _HelpPageState extends State<HelpPage> {
               ),
               TextField(
                 controller: _bodyController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelStyle: TextStyle(
                     fontSize: 15,

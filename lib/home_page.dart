@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String currentCategory = "Funkcionalno";
-  int _currenIndex = 0;
   Color backColor = Colors.white;
   late Color borderColor = Colors.transparent;
 
@@ -43,17 +42,17 @@ class _HomePageState extends State<HomePage> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: IconButton(onPressed:(){
+            child: IconButton(onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => const SearchScreen()),
               );
             }, icon:
-              const Icon(
-                Icons.search,
-                size: 28,
-                color: Colors.black87,),
+            const Icon(
+              Icons.search,
+              size: 28,
+              color: Colors.black87,),
             ),
           )
         ],
@@ -62,7 +61,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: [
           //_searchField(),
-          const SizedBox(height: 20,),
+          const SizedBox(height: 30,),
           _categoriesSection(),
           const SizedBox(height: 30,),
           _languagesFrameworksSection(currentCategory),
@@ -71,130 +70,134 @@ class _HomePageState extends State<HomePage> {
           // const SizedBox(height: 40,),
         ],
       ),
-       );
+    );
   }
 
   Column _languagesFrameworksSection(String category) {
     return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                'Jezici i framework-ovi',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Poppins-Medium'
-                ),
-              ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Text(
+            'Jezici i framework-ovi',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Poppins-Medium'
             ),
-            const SizedBox(height: 15,),
-            SizedBox(
-              height: 240,
-              child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('Tehnologije').snapshots(),
-                builder: (context, snapshot) {
-                  List<Container> techWidgets = [];
-                  if (snapshot.hasData) {
-                    final technologies = snapshot.data?.docs.reversed.toList();
-                    for (var tech in technologies!) {
-                      try {
-                        if (tech['kategorija'] == currentCategory) {
-                          final techWidget = Container(
-                            width: 210,
-                            decoration: BoxDecoration(
-                              //color: Color(int.parse(tech['color']))
-                              color: const Color(0xffffffff).withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(
-                                color: Color(int.parse(tech['color'])),
-                                width: 6,
-                              ),
+          ),
+        ),
+        const SizedBox(height: 15,),
+        SizedBox(
+          height: 240,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('Tehnologije')
+                .snapshots(),
+            builder: (context, snapshot) {
+              List<Container> techWidgets = [];
+              if (snapshot.hasData) {
+                final technologies = snapshot.data?.docs.reversed.toList();
+                for (var tech in technologies!) {
+                  try {
+                    if (tech['kategorija'] == currentCategory) {
+                      final techWidget = Container(
+                        width: 210,
+                        decoration: BoxDecoration(
+                          //color: Color(int.parse(tech['color']))
+                          color: const Color(0xffffffff).withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                            color: Color(int.parse(tech['color'])),
+                            width: 6,
+                          ),
 
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.asset(
+                              tech['slika'], width: 100, height: 100,),
+                            //Image.network(FirebaseStorageService().getImage(tech['slika']) as String, width:100, height:100), ne radi
+                            Column(
                               children: [
-                                Image.asset(tech['slika'], width: 100, height: 100,),
-                                //Image.network(FirebaseStorageService().getImage(tech['slika']) as String, width:100, height:100), ne radi
-                                Column(
-                                  children: [
-                                    Text(
-                                      tech['naziv'],
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontFamily: 'Poppins-Medium',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    currentTech = tech['naziv'];
-                                    urlImage = tech['slika'];
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => MainArticle(currentTech: currentTech, imageUrl: urlImage,)),
-                                      );
-                                  },
-                                  child: Container(
-                                    height: 45,
-                                    width: 130,
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                          colors: [ // colors should be upgraded
-                                            Colors.blue, Colors.green
-                                          ]
-                                      ),
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        'Prikaži',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 15,
-                                            fontFamily: 'Poppins-Medium',
-                                        ),
-                                      ),
-                                    ),
+                                Text(
+                                  tech['naziv'],
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontFamily: 'Poppins-Medium',
                                   ),
-                                )
+                                ),
                               ],
                             ),
-                          );
-                          techWidgets.add(techWidget);
-                        }
-                      }
-                      catch (error) {}
+                            GestureDetector(
+                              onTap: () {
+                                currentTech = tech['naziv'];
+                                urlImage = tech['slika'];
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      MainArticle(currentTech: currentTech,
+                                        imageUrl: urlImage,)),
+                                );
+                              },
+                              child: Container(
+                                height: 45,
+                                width: 130,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                      colors: [ // colors should be upgraded
+                                        Colors.blue, Colors.green
+                                      ]
+                                  ),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'Prikaži',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15,
+                                      fontFamily: 'Poppins-Medium',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                      techWidgets.add(techWidget);
                     }
                   }
-                  return ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.only(left: 0, right: 20),
-                    itemCount: techWidgets.length,
-                    separatorBuilder: (context, index) =>
-                    const SizedBox(width: 2,),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20,
-                            right: 20
-                        ),
-                        child: techWidgets[index],
-                      );
-                    },
+                  catch (error) {}
+                }
+              }
+              return ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.only(left: 0, right: 20),
+                itemCount: techWidgets.length,
+                separatorBuilder: (context, index) =>
+                const SizedBox(width: 2,),
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20
+                    ),
+                    child: techWidgets[index],
                   );
                 },
-              ),
-            ),
-          ],
-        );
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   Column _categoriesSection() {
@@ -217,7 +220,8 @@ class _HomePageState extends State<HomePage> {
         SizedBox(
           height: 140,
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('Kategorije').orderBy('number').snapshots(),
+            stream: FirebaseFirestore.instance.collection('Kategorije').orderBy(
+                'number').snapshots(),
             builder: (context, snapshot) {
               List<GestureDetector> categoryWidgets = [];
               if (snapshot.hasData) {
@@ -232,13 +236,15 @@ class _HomePageState extends State<HomePage> {
                       width: 120,
                       decoration: BoxDecoration(
                         color: currentCategory == cat['name']
-                            ?  Color(int.parse(cat['boxColor'])).withOpacity(0.4)
-                            : Color(int.parse(cat['boxColor'])).withOpacity(0.7),
-                             borderRadius: BorderRadius.circular(20),
-                             border: Border.all(
-                                 color:  currentCategory == cat['name']
-                                 ? Colors.black.withOpacity(0.5)
-                                 : Color(int.parse(cat['boxColor'])).withOpacity(0.7), width: 2),
+                            ? Color(int.parse(cat['boxColor'])).withOpacity(0.4)
+                            : Color(int.parse(cat['boxColor'])).withOpacity(
+                            0.7),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                            color: currentCategory == cat['name']
+                                ? Colors.black.withOpacity(0.5)
+                                : Color(int.parse(cat['boxColor'])).withOpacity(
+                                0.7), width: 2),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -259,10 +265,10 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             cat['name'],
                             style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Poppins-Medium',
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontFamily: 'Poppins-Medium',
                             ),
                           )
                         ],
@@ -285,134 +291,10 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               );
-
             },
           ),
         ),
       ],
     );
   }
-/*
-  Container _searchField() {
-    return Container(
-          margin: const EdgeInsets.only(top: 40, left: 20, right: 20),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xff1D1617).withOpacity(0.11),
-                blurRadius: 40,
-                spreadRadius: 0.0,
-              )
-            ]
-          ),
-          child: TextField(
-            onTap: (){
-              Navigator.push(
-                     context,
-                    MaterialPageRoute(
-                    builder: (context) => SearchScreen()),
-              );
-            },
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              contentPadding: const EdgeInsets.all(15),
-              hintText: 'Pretraži...',
-              hintStyle: const TextStyle(
-                color: Color(0xffDDDADA),
-                fontSize: 14,
-                fontFamily: 'Poppins',
-              ),
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(12),
-                child: SvgPicture.asset('assets/icons/Search.svg'),
-              ),
-              suffixIcon: SizedBox(
-                width: 100,
-                child: IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const VerticalDivider(
-                        color:  Colors.black,
-                        indent: 10,
-                        endIndent: 10,
-                        thickness: 0.1,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: SvgPicture.asset('assets/icons/Filter.svg'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-        );
-  }*/
-  /*_bottomNavigationBar() {
-    return BottomNavigationBar(
-      currentIndex: _currenIndex,
-      fixedColor: Colors.lightBlue.shade200,
-      backgroundColor: Colors.blue.shade300,
-      elevation: 4,
-      onTap: (int index) {
-        if (index == 0) {
-          setState(() {
-            _currenIndex = index;
-          });
-        } else if (index == 1) {
-          setState(() {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const SideMenu()));
-          });
-        } else if (index == 2) {
-          setState(() {});
-        } else if (index == 3) {
-          setState(() {
-            _currenIndex = index;
-          });
-        } else if (index == 4) {
-          setState(() {
-            _currenIndex = index;
-          });
-        }
-      },
-      unselectedItemColor: Colors.white,
-      items: items,
-      type: BottomNavigationBarType.fixed,
-    );
-  }
-
-  // list of items
-  List<BottomNavigationBarItem> items = const [
-    BottomNavigationBarItem(
-      icon: Icon(IconlyBold.home),
-      label: "Home",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(IconlyBold.edit),
-      label: "Upload",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(
-        IconlyBold.scan,
-        color: Colors.white,
-      ),
-      label: "Scan",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(IconlyBold.notification),
-      label: "Notification",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(IconlyBold.profile),
-      label: "Profile",
-    ),
-  ];*/
 }

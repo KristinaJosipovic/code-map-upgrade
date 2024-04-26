@@ -31,9 +31,9 @@ class _SearchScreenState extends State<SearchScreen> {
     QuerySnapshot querySnapshot = await collectionReference.get();
 
 
-    querySnapshot.docs.forEach((doc) {
+    for (var doc in querySnapshot.docs) {
       tempList.add(Names.fromFirestore(doc));
-    });
+    }
 
     setState(() {
       namesList = tempList;
@@ -249,7 +249,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   searchSuggestionsTiem(String text) {
     return Container(
-      margin: EdgeInsets.only(left: 0, right: 8),
+      margin: const EdgeInsets.only(left: 0, right: 8),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
       decoration:
       BoxDecoration(

@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/home_page.dart';
+import '../bottomNavigationBar.dart';
 import '../webCompiler/webView.dart';
 
 const TextStyle tStyle = TextStyle(
@@ -51,11 +51,11 @@ class _MainArticleState extends State<MainArticle> {
                                   ),
                                 ),
                                 leading: IconButton(
-                                  icon: Icon(Icons.arrow_back),
+                                  icon: const Icon(Icons.arrow_back),
                                   onPressed: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => HomePage()),
+                                      MaterialPageRoute(builder: (context) => const HomePage()),
                                     );
                                   },
                                 ),
@@ -122,6 +122,7 @@ class _MainArticleState extends State<MainArticle> {
                                 WebViewCompiler(widget.currentTech, txt['color']),
                                ],
                               ),
+                        bottomNavigationBar: const bottomNavigationBar(),
                              ),
                         );
 
@@ -180,7 +181,8 @@ class _MainArticleState extends State<MainArticle> {
                                                   ),
                                                 );
                                               }
-                                              catch (e) {} // try-catch za card
+                                              catch (e) {}
+                                              return null; // try-catch za card
                                             },
                                           ),
                                    ],
