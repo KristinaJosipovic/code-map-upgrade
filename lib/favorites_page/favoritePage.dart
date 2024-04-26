@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:code_map/search_screen/language_names.dart';
 import 'package:code_map/home_page.dart';
 
+import '../articles/article_page.dart';
 import '../login.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -16,6 +17,7 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   late List<Names> namesList = [];
   late List<Names> tempList = [];
+  List<String> userFavourites = [];
   var auth = FirebaseAuth.instance;
   var isLogin = false;
 
@@ -32,17 +34,48 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   void initState() {
     super.initState();
-    _getNamesFromFirestore();
     checkIfLogin();
+    Future.delayed(Duration.zero, () async {
+      await _getUserFavourites(FirebaseAuth.instance.currentUser!.uid);
+      _getNamesFromFirestore();
+    });
+
+  }
+
+  Future<void> _getUserFavourites(String userId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
+          .collection('Korisnici')
+          .where('uid', isEqualTo: userId)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+            querySnapshot.docs.first;
+        Map<String, dynamic> data = docSnapshot.data()!;
+        List<String> arrayData = List<String>.from(data['favourites'] ?? []);
+        setState(() {
+          userFavourites = arrayData;
+        });
+      } else {
+        print('No matching documents found');
+        return;
+      }
+    } catch (e) {
+      print('Error retrieving data: $e');
+      return;
+    }
   }
 
   void _getNamesFromFirestore() async {
     CollectionReference collectionReference = FirebaseFirestore.instance.collection('Tehnologije');
     QuerySnapshot querySnapshot = await collectionReference.get();
 
-    for (var doc in querySnapshot.docs) {
-      tempList.add(Names.fromFirestore(doc));
-    }
+    querySnapshot.docs.forEach((doc) {
+      if (userFavourites.contains(doc['naziv'])) {
+        tempList.add(Names.fromFirestore(doc));
+      }
+    });
 
     setState(() {
       namesList = tempList;
@@ -68,7 +101,7 @@ class _FavoritePageState extends State<FavoritePage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
         ),
@@ -80,73 +113,89 @@ class _FavoritePageState extends State<FavoritePage> {
             fontSize: 23,
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: IconButton(
-              icon: const Icon(Icons.favorite_border, color: Colors.black),
-              onPressed: () {
-              },
-            ),
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 5, right: 5, bottom: 20),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20.0,
-            crossAxisSpacing: 20.0,
-            childAspectRatio: 0.8,
-          ),
+        child: ListView.builder(
           itemCount: namesList.length,
           itemBuilder: (context, index) {
             final tech = namesList[index];
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                  color: const Color(0xae000000),
-                  width: 4,
-                ),
+            return Row(
+              children: [
+                GestureDetector(
+                onTap: () {
+                  print([tech.name, tech.imageUrl]);
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      MainArticle(currentTech: tech.name, imageUrl: tech.imageUrl,)),
+                );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: Color(0xae000000),
+                      width: 4,
+                    ),
 
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 7,
-                    offset: const Offset(0,3),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 110, // Širina slike
-                    height: 110, // Visina slike
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.asset(
-                        tech.imageUrl,
-                        //fit: BoxFit.cover,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: Offset(0,3),
                       ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    tech.name,
-                    style: const TextStyle(
-                      fontFamily: 'Poppins-Medium',
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 80, // Širina slike
+                        height: 80, // Visina slike
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.asset(
+                            tech.imageUrl,
+                            //fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        tech.name,
+                        style: const TextStyle(
+                          fontFamily: 'Poppins-Medium',
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  iconSize: 50,
+                  onPressed: () {
+                    FirebaseFirestore.instance.collection("Korisnici")
+                        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+                        .get()
+                        .then((QuerySnapshot querySnapshot) {
+                    var docRef = querySnapshot.docs.first.reference;
+                    docRef.update({
+                    'favourites': FieldValue.arrayRemove([namesList[index].name])
+                    })
+                        .then((_) => print("Removed ${namesList[index].name}"))
+                        .catchError((error) => print("Removal failed: $error"));
+                    },
+                  );
+                }
+                )
+            ]
             );
           },
         ),
@@ -183,7 +232,7 @@ class NotLoggedInScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LogIn()),
+                  MaterialPageRoute(builder: (context) => LogIn()),
                 );
               },
               child: Container(
@@ -198,7 +247,7 @@ class NotLoggedInScreen extends StatelessWidget {
                       color: Colors.black.withOpacity(0.2),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: const Offset(0, 2),
+                      offset: Offset(0, 2),
                     ),
                   ],
                 ),
