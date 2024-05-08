@@ -41,9 +41,9 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LogIn()),
+                  MaterialPageRoute(builder: (context) => const LogIn())
                 );
               },
               child: Padding(
@@ -74,9 +74,9 @@ class _WelcomePageState extends State<WelcomePage> {
             const SizedBox(height: 10.0),
             GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignUp()),
+                  MaterialPageRoute(builder: (context) => const SignUp())
                 );
               },
               child: Padding(
@@ -116,9 +116,9 @@ class _WelcomePageState extends State<WelcomePage> {
             const SizedBox(height: 15.0),
             GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  MaterialPageRoute(builder: (context) => const HomePage()), (route) => false
                 );
               },
               child: const Icon(Icons.account_circle, size: 60, color: Colors.white,),

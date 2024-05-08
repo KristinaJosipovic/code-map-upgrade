@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:code_map/articles/article_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:code_map/search_screen/language_names.dart';
@@ -97,9 +98,9 @@ class _FavoritePageState extends State<FavoritePage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage()), (route) => false
             );
           },
         ),
@@ -129,62 +130,62 @@ class _FavoritePageState extends State<FavoritePage> {
                     color: const Color(0xae000000),
                     width: 2,
                   ),
-                  /*boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0,
-                      blurRadius: 7,
-                      offset: Offset(0,2),
-                    ),
-                  ],*/
                 ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: 80,
-                        height: 80,
-                        child: ClipRRect(
-                          //borderRadius: BorderRadius.circular(40),
-                          child: Image.asset(
-                            tech.imageUrl,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainArticle(currentTech: tech.name, imageUrl: tech.imageUrl)),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: ClipRRect(
+                            //borderRadius: BorderRadius.circular(40),
+                            child: Image.asset(
+                              tech.imageUrl,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      tech.name,
-                      style: const TextStyle(
-                        fontFamily: 'Poppins-Medium',
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                        fontSize: 22,
+                      const SizedBox(width: 10),
+                      Text(
+                        tech.name,
+                        style: const TextStyle(
+                          fontFamily: 'Poppins-Medium',
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 22,
+                        ),
                       ),
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        FirebaseFirestore.instance.collection("Korisnici")
-                            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-                            .get()
-                            .then((QuerySnapshot querySnapshot) {
-                          var docRef = querySnapshot.docs.first.reference;
-                          docRef.update({
-                            'favourites': FieldValue.arrayRemove([tech.name])
-                          })
-                              .then((_) {
-                            setState(() {
-                              namesList.removeAt(index);
-                            });
-                          })
-                              .catchError((error){});
-                        });
-                      },
-                    ),
-                  ],
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          FirebaseFirestore.instance.collection("Korisnici")
+                              .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+                              .get()
+                              .then((QuerySnapshot querySnapshot) {
+                            var docRef = querySnapshot.docs.first.reference;
+                            docRef.update({
+                              'favourites': FieldValue.arrayRemove([tech.name])
+                            })
+                                .then((_) {
+                              setState(() {
+                                namesList.removeAt(index);
+                              });
+                            })
+                                .catchError((error){});
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -224,9 +225,9 @@ class NotLoggedInScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => const LogIn()),
+                  MaterialPageRoute(builder: (context) => const LogIn()), (route) => false
                 );
               },
               child: Container(

@@ -17,8 +17,10 @@ class SideMenu extends StatefulWidget {
 }
 
 class _SideMenuState extends State<SideMenu> {
+  String username = "";
+  String email = "";
 
-  Future<Map<String, dynamic>> getUserData() async {
+  void getUserData() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
           .collection('Korisnici')
@@ -28,18 +30,28 @@ class _SideMenuState extends State<SideMenu> {
 
       if (querySnapshot.docs.isNotEmpty) {
         Map<String, dynamic> userData = querySnapshot.docs.first.data();
-        return {
-          'name': userData['name'],
-          'email': userData['email'],
-        };
+        setState(() {
+          username = userData['name'];
+          email = userData['email'];
+        });
+
       } else {
         print('No matching documents found');
-        return {};
+        return;
       }
     } catch (e) {
       print('Error retrieving user data: $e');
-      return {};
+      return;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    /*Future.delayed(Duration.zero, () async {
+      await getUserData();
+    });*/
+    getUserData();
   }
 
   @override
@@ -48,12 +60,12 @@ class _SideMenuState extends State<SideMenu> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const UserAccountsDrawerHeader(
-                accountName: Text("Kristina Josipović",
-                  style: TextStyle(fontFamily: 'Poppins', color: Colors.black),),
-                accountEmail: Text('kristinajosipovic21@gmail.com',
-                  style: TextStyle(fontFamily: 'Poppins', color: Colors.black),),
-                decoration: BoxDecoration(
+          UserAccountsDrawerHeader(
+                accountName: Text(username,
+                  style: const TextStyle(fontFamily: 'Poppins', color: Colors.black),),
+                accountEmail: Text(email,
+                  style: const TextStyle(fontFamily: 'Poppins', color: Colors.black),),
+                decoration: const BoxDecoration(
                 gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
