@@ -134,7 +134,7 @@ class _MainArticleState extends State<MainArticle> {
                                                     backgroundColor: Colors.green,
                                                     content: Text(
                                                       "Dodano u omiljeno!",
-                                                      style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins',),
+                                                      style: TextStyle(fontSize: 16.0, fontFamily: 'Poppins-Medium',),
                                                     )));
                                               }
                                               else {

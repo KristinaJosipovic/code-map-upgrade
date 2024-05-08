@@ -52,7 +52,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
           });
         }
       },
-      unselectedItemColor: Colors.black, // Postavljamo boju neizabranih stavki na crnu
+      unselectedItemColor: Colors.black,
       items: items,
       type: BottomNavigationBarType.fixed,
     );
@@ -78,6 +78,6 @@ List<BottomNavigationBarItem> items = const [
   ),
   BottomNavigationBarItem(
     icon: Icon(Icons.person),
-    label: "LogIn",
+    label: "Prijava",
   ),
 ];

@@ -175,10 +175,13 @@ class _FavoritePageState extends State<FavoritePage> {
                           docRef.update({
                             'favourites': FieldValue.arrayRemove([tech.name])
                           })
-                              .then((_) => print("Removed ${tech.name}"))
-                              .catchError((error) => print("Removal failed: $error"));
-                        }
-                        );
+                              .then((_) {
+                            setState(() {
+                              namesList.removeAt(index);
+                            });
+                          })
+                              .catchError((error){});
+                        });
                       },
                     ),
                   ],
