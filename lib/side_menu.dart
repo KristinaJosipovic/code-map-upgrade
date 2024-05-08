@@ -9,8 +9,14 @@ import 'package:flutter/services.dart';
 import 'home_page.dart';
 import 'package:code_map/favorites_page/favoritePage.dart';
 
-class SideMenu extends StatelessWidget {
+class SideMenu extends StatefulWidget {
   const SideMenu({super.key});
+
+  @override
+  State<SideMenu> createState() => _SideMenuState();
+}
+
+class _SideMenuState extends State<SideMenu> {
 
   Future<Map<String, dynamic>> getUserData() async {
     try {
@@ -136,7 +142,7 @@ class SideMenu extends StatelessWidget {
             onTap: () async {
               await FirebaseAuth.instance.signOut();
               FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const WelcomePage()), (route) => false);
               });
             },
             leading: const CircleAvatar(
