@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/articles/article_page.dart';
+import 'package:code_map/not_logged_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:code_map/search_screen/language_names.dart';
 import 'package:code_map/home_page.dart';
-import '../login.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key? key}) : super(key: key);
@@ -57,11 +57,9 @@ class _FavoritePageState extends State<FavoritePage> {
           userFavourites = arrayData;
         });
       } else {
-        print('No matching documents found');
         return;
       }
     } catch (e) {
-      print('Error retrieving data: $e');
       return;
     }
   }
@@ -83,7 +81,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-    return !isLogin ? const NotLoggedInScreen() :
+    return !isLogin ? const NotLoggedInScreen(color: '0xfff2f2f2',) :
     Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
@@ -146,7 +144,6 @@ class _FavoritePageState extends State<FavoritePage> {
                           width: 80,
                           height: 80,
                           child: ClipRRect(
-                            //borderRadius: BorderRadius.circular(40),
                             child: Image.asset(
                               tech.imageUrl,
                             ),
@@ -193,74 +190,6 @@ class _FavoritePageState extends State<FavoritePage> {
         ),
       ),
     );
-
-
-
   }
 }
 
-class NotLoggedInScreen extends StatelessWidget {
-  const NotLoggedInScreen({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Za korištenje ove opcije morate biti prijavljeni!\n\nŽelite li se prijaviti?",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Poppins-Medium',
-              fontSize: 24,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LogIn()), (route) => false
-                );
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 30.0),
-                decoration: BoxDecoration(
-                  color: Colors.white70,
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.black),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 1,
-                      blurRadius: 3,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: const Text(
-                  "Prijavite se",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Poppins-Medium',
-                    fontSize: 22,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

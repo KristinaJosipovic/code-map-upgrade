@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code_map/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:code_map/not_logged_in_screen.dart';
 
 class WebViewCompiler extends StatefulWidget {
   final String techName;
@@ -52,67 +52,7 @@ class _WebViewCompilerState extends State<WebViewCompiler> {
   Widget build(BuildContext context) {
       return isLogin ? Scaffold(
         body: MyWebView(controller: controller),
-      ) : Scaffold(
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Za korištenje ove opcije morate biti prijavljeni!\n\nŽelite li se prijaviti?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Poppins-Medium',
-                    fontSize: 22,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const LogIn()),
-                      );
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 30.0),
-                      decoration: BoxDecoration(
-                        color: Color(int.parse(widget.color)),
-                        borderRadius: BorderRadius.circular(5),
-                       // border: Border.all(color: Colors.black),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: const Text(
-                        "Prijavite se",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Poppins-Medium',
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
+      ) : NotLoggedInScreen(color: widget.color);
 
     }
 }
@@ -165,7 +105,6 @@ class _MyWebViewState extends State<MyWebView> {
           },
         ),
       )
-    // Modify from here...
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..addJavaScriptChannel(
         'SnackBar',
@@ -174,7 +113,6 @@ class _MyWebViewState extends State<MyWebView> {
               .showSnackBar(SnackBar(content: Text(message.message)));
         },
       );
-    // ...to here.
   }
   @override
   Widget build(BuildContext context) {

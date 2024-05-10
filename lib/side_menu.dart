@@ -36,11 +36,9 @@ class _SideMenuState extends State<SideMenu> {
         });
 
       } else {
-        print('No matching documents found');
         return;
       }
     } catch (e) {
-      print('Error retrieving user data: $e');
       return;
     }
   }
@@ -48,9 +46,6 @@ class _SideMenuState extends State<SideMenu> {
   @override
   void initState() {
     super.initState();
-    /*Future.delayed(Duration.zero, () async {
-      await getUserData();
-    });*/
     getUserData();
   }
 
@@ -154,7 +149,8 @@ class _SideMenuState extends State<SideMenu> {
             onTap: () async {
               await FirebaseAuth.instance.signOut();
               FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const WelcomePage()), (route) => false);
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (context) => const WelcomePage()), (route) => false);
               });
             },
             leading: const CircleAvatar(
