@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/help.dart';
-import 'package:code_map/search_screen/searchScreen.dart';
+import 'package:code_map/search_screen/search_screen.dart';
 import 'package:code_map/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'home_page.dart';
-import 'package:code_map/favorites_page/favoritePage.dart';
+import 'package:code_map/favorites_page/favorite_page.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:code_map/favorites_page/favoritePage.dart';
+import 'package:code_map/favorites_page/favorite_page.dart';
 import 'package:code_map/help.dart';
 import 'package:code_map/login.dart';
-import 'package:code_map/search_screen/searchScreen.dart';
+import 'package:code_map/search_screen/search_screen.dart';
 import 'package:code_map/home_page.dart';
 
 class bottomNavigationBar extends StatefulWidget {

@@ -36,24 +36,23 @@ class _SignUpState extends State<SignUp> {
           'date_created': DateTime.timestamp(),
           'favourites': []
         });
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+        Navigator.pushAndRemoveUntil(
+            context, MaterialPageRoute(builder: (context) => const HomePage()), (route) => false);
       } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          print("Šifra je preslaba");
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              backgroundColor: Colors.orangeAccent,
-              content: Text(
-                "Šifra je preslaba",
-                style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins-Medium'),
-              )));
-        } else if (e.code == "email-already-in-use") {
-          print("Račun već postoji");
+        if (e.code == "email-already-in-use") {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               backgroundColor: Colors.orangeAccent,
               content: Text(
                 "Korisnički račun već postoji",
                 style: TextStyle(fontSize: 18.0),
+              )));
+        }
+        else if (e.code == 'weak-password') {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              backgroundColor: Colors.orangeAccent,
+              content: Text(
+                "Šifra je preslaba (mora biti dužine između 10 i 20 karaktera)",
+                style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins-Medium'),
               )));
         }
       }
