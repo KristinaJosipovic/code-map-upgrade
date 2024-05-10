@@ -1,7 +1,7 @@
-import 'package:code_map/login.dart';
-import 'package:code_map/signup.dart';
+import 'package:code_map/user_authentication/login.dart';
+import 'package:code_map/user_authentication/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:code_map/home_page.dart';
+import 'package:code_map/screens/home_screen.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);

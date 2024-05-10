@@ -1,4 +1,4 @@
-import 'package:code_map/signup.dart';
+import 'package:code_map/user_authentication/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

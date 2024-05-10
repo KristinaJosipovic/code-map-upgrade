@@ -1,7 +1,7 @@
-import 'package:code_map/home_page.dart';
+import 'package:code_map/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
-import 'package:code_map/articles/article_page.dart';
+import 'package:code_map/screens/article_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'language_names.dart';
 import 'custom_text_field.dart';

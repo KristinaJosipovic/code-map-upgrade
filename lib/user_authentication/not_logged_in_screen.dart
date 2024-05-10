@@ -1,4 +1,4 @@
-import 'package:code_map/login.dart';
+import 'login.dart';
 import 'package:flutter/material.dart';
 
 class NotLoggedInScreen extends StatefulWidget {

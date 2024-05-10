@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:code_map/not_logged_in_screen.dart';
+import 'package:code_map/user_authentication/not_logged_in_screen.dart';
 
 class WebViewCompiler extends StatefulWidget {
   final String techName;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code_map/home_page.dart';
-import 'package:code_map/bottom_navigation_bar.dart';
-import 'package:code_map/webCompiler/webView.dart';
+import 'package:code_map/screens/home_screen.dart';
+import 'package:code_map/navigation/bottom_navigation_bar.dart';
+import 'package:code_map/web_compiler/web_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 const TextStyle tStyle = TextStyle(

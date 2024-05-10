@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:code_map/favorites_page/favorite_page.dart';
-import 'package:code_map/help.dart';
-import 'package:code_map/login.dart';
-import 'package:code_map/search_screen/search_screen.dart';
-import 'package:code_map/home_page.dart';
+import 'package:code_map/screens/favorite_screen.dart';
+import 'package:code_map/screens/help_screen.dart';
+import 'package:code_map/user_authentication/login.dart';
+import 'package:code_map/screens/search_screen/search_screen.dart';
+import 'package:code_map/screens/home_screen.dart';
 
 class bottomNavigationBar extends StatefulWidget {
   const bottomNavigationBar({super.key});

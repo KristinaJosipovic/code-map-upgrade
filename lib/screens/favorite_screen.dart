@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code_map/articles/article_page.dart';
-import 'package:code_map/not_logged_in_screen.dart';
+import 'package:code_map/screens/article_screen.dart';
+import 'package:code_map/user_authentication/not_logged_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:code_map/search_screen/language_names.dart';
-import 'package:code_map/home_page.dart';
+import 'package:code_map/screens/search_screen/language_names.dart';
+import 'package:code_map/screens/home_screen.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key? key}) : super(key: key);

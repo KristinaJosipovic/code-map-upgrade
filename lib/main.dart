@@ -1,10 +1,10 @@
-import 'package:code_map/home_page.dart';
-import 'package:code_map/load_page.dart';
+import 'package:code_map/screens/home_screen.dart';
+import 'package:code_map/screens/load_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'firebase_options.dart';
-import 'package:code_map/welcome_page.dart';
+import 'service/firebase_options.dart';
+import 'package:code_map/screens/welcome_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

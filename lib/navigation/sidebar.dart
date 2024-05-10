@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:code_map/help.dart';
-import 'package:code_map/search_screen/search_screen.dart';
-import 'package:code_map/welcome_page.dart';
+import 'package:code_map/screens/help_screen.dart';
+import 'package:code_map/screens/search_screen/search_screen.dart';
+import 'package:code_map/screens/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'home_page.dart';
-import 'package:code_map/favorites_page/favorite_page.dart';
+import '../screens/home_screen.dart';
+import 'package:code_map/screens/favorite_screen.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});
@@ -19,8 +19,20 @@ class SideMenu extends StatefulWidget {
 class _SideMenuState extends State<SideMenu> {
   String username = "";
   String email = "";
+  var isLogin = false;
+
+  checkIfLogin() async {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null && mounted) {
+        setState(() {
+          isLogin = true;
+        });
+      }
+    });
+  }
 
   void getUserData() async {
+    await checkIfLogin();
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
           .collection('Korisnici')
@@ -31,8 +43,14 @@ class _SideMenuState extends State<SideMenu> {
       if (querySnapshot.docs.isNotEmpty) {
         Map<String, dynamic> userData = querySnapshot.docs.first.data();
         setState(() {
-          username = userData['name'];
-          email = userData['email'];
+          if (!isLogin) {
+            username = "";
+            email = "";
+          }
+          else {
+            username = userData['name'];
+            email = userData['email'];
+          }
         });
 
       } else {
