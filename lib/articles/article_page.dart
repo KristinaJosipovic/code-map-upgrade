@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_map/home_page.dart';
-import '../bottomNavigationBar.dart';
-import '../webCompiler/webView.dart';
+import 'package:code_map/bottomNavigationBar.dart';
+import 'package:code_map/webCompiler/webView.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 const TextStyle tStyle = TextStyle(
@@ -50,7 +50,6 @@ class _MainArticleState extends State<MainArticle> {
           userFavourites = arrayData;
         });
       } else {
-        print('No matching documents found');
         return;
       }
   }
@@ -115,7 +114,6 @@ class _MainArticleState extends State<MainArticle> {
                                     child: IconButton(
                                       icon: Icon(favIcon, color: Colors.black),
                                       onPressed: () {
-                                        print(FirebaseAuth.instance.currentUser?.uid);
                                         FirebaseFirestore.instance.collection("Korisnici")
                                             .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
                                             .get()
@@ -128,8 +126,8 @@ class _MainArticleState extends State<MainArticle> {
                                                 docRef.update({
                                                 'favourites': FieldValue.arrayUnion([txt['tech']])
                                               })
-                                              .then((_) => print("Added ${txt['tech']}"))
-                                              .catchError((error) => print("Add failed: $error"));
+                                              .then((_) => {})
+                                              .catchError((error) => {});
                                                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                                     backgroundColor: Colors.green,
                                                     content: Text(
@@ -144,8 +142,8 @@ class _MainArticleState extends State<MainArticle> {
                                                 docRef.update({
                                                   'favourites': FieldValue.arrayRemove([txt['tech']])
                                                 })
-                                                    .then((_) => print("Added ${txt['tech']}"))
-                                                    .catchError((error) => print("Add failed: $error"));
+                                                    .then((_) => {})
+                                                    .catchError((error) => {});
                                                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                                     duration: Duration(seconds: 2),
                                                     backgroundColor: Colors.red,
@@ -193,19 +191,19 @@ class _MainArticleState extends State<MainArticle> {
                                             textSection(txt, 'intro'),
                                             Image.asset(
                                             widget.imageUrl, width: 200, height: 200,),
-                                            textSection(txt, 'history'),
-                                            textSection(txt, 'interface'),
-                                            textSection(txt, 'syntax'),
-                                            textSection(txt, 'extensions'),
-                                            textSection(txt, 'use'),
-                                            textSection(txt, 'popularity'),
-                                            textSection(txt, 'pros_cons'),
-                                            textSection(txt, 'enumeration_des'),
-                                            ListCard(txt, 'enumeration', 'color'),
-                                            textSection(txt, 'implementation'),
-                                            textSection(txt, 'enumeration_des2'),
-                                            ListCard(txt, 'enumeration2', 'color'),
-                                            ]
+                                              textSection(txt, 'history'),
+                                              textSection(txt, 'interface'),
+                                              textSection(txt, 'syntax'),
+                                              textSection(txt, 'extensions'),
+                                              textSection(txt, 'use'),
+                                              textSection(txt, 'popularity'),
+                                              textSection(txt, 'pros_cons'),
+                                              textSection(txt, 'enumeration_des'),
+                                              ListCard(txt, 'enumeration', 'color'),
+                                              textSection(txt, 'implementation'),
+                                              textSection(txt, 'enumeration_des2'),
+                                              ListCard(txt, 'enumeration2', 'color'),
+                                              ]
                                            )
                                       ),
                                 WebViewCompiler(widget.currentTech, txt['color']),
@@ -271,7 +269,7 @@ class _MainArticleState extends State<MainArticle> {
                                                 );
                                               }
                                               catch (e) {}
-                                              return null; // try-catch za card
+                                              return null;
                                             },
                                           ),
                                    ],
@@ -294,28 +292,3 @@ class _MainArticleState extends State<MainArticle> {
   }
 }
 
-
-/*body: SingleChildScrollView(
-                          padding: const EdgeInsets.all(12.0),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch, // bolje nego 'start'
-                                  children: [
-                                    textSection(text, 'intro'),
-                                    Image.asset(
-                                      urlImage, width: 200, height: 200,),
-                                    textSection(text, 'history'),
-                                    textSection(text, 'interface'),
-                                    textSection(text, 'syntax'),
-                                    textSection(text, 'extensions'),
-                                    textSection(text, 'use'),
-                                    textSection(text, 'popularity'),
-                                    textSection(text, 'pros_cons'),
-                                    textSection(text, 'enumeration_des'),
-                                    ListCard(text, 'enumeration', 'color'),
-                                    textSection(text, 'implementation'),
-                                    textSection(text, 'enumeration_des2'),
-                                    ListCard(text, 'enumeration2', 'color'),
-                                  ]
-                              )
-                          ),
-                        );*/

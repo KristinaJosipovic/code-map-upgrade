@@ -60,14 +60,11 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: backColor,
       body: ListView(
         children: [
-          //_searchField(),
           const SizedBox(height: 30,),
           _categoriesSection(),
           const SizedBox(height: 30,),
           _languagesFrameworksSection(currentCategory),
           const SizedBox(height: 40,),
-          // _popularModelSection(),
-          // const SizedBox(height: 40,),
         ],
       ),
     );
@@ -119,7 +116,6 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Image.asset(
                               tech['slika'], width: 100, height: 100,),
-                            //Image.network(FirebaseStorageService().getImage(tech['slika']) as String, width:100, height:100), ne radi
                             Column(
                               children: [
                                 Text(
@@ -141,7 +137,8 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(builder: (context) =>
                                       MainArticle(currentTech: currentTech,
-                                        imageUrl: urlImage,)),
+                                        imageUrl: urlImage,)
+                                  ),
                                 );
                               },
                               child: Container(
@@ -149,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                                 width: 130,
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
-                                      colors: [ // colors should be upgraded
+                                      colors: [
                                         Colors.blue, Colors.green
                                       ]
                                   ),
