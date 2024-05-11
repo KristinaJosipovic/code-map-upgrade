@@ -30,14 +30,14 @@ class _LogInState extends State<LogIn> {
             backgroundColor: Colors.orangeAccent,
             content: Text(
               "Ne postoji korisnik za unesenu email adresu",
-              style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins',),
+              style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins-Medium',),
             )));
       } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.orangeAccent,
             content: Text(
               "Pogrešno unesena lozinka",
-              style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins',),
+              style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins-Medium',),
             )));
       }
     }
@@ -74,7 +74,7 @@ class _LogInState extends State<LogIn> {
                         child: TextFormField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Molimo unesite email adresu!';
+                              return 'Molimo unesite email adresu';
                             }
                             return null;
                           },

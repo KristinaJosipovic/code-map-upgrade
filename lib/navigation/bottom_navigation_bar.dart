@@ -5,14 +5,14 @@ import 'package:code_map/user_authentication/login.dart';
 import 'package:code_map/screens/search_screen/search_screen.dart';
 import 'package:code_map/screens/home_screen.dart';
 
-class bottomNavigationBar extends StatefulWidget {
-  const bottomNavigationBar({super.key});
+class BottomNavigation extends StatefulWidget {
+  const BottomNavigation({super.key});
 
   @override
-  State<bottomNavigationBar> createState() => _bottomNavigationBarState();
+  State<BottomNavigation> createState() => _BottomNavigationBarState();
 }
 
-class _bottomNavigationBarState extends State<bottomNavigationBar> {
+class _BottomNavigationBarState extends State<BottomNavigation> {
   final int _currenIndex = 0;
 
   @override

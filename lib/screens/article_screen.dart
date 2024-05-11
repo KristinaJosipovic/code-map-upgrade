@@ -50,7 +50,6 @@ class _MainArticleState extends State<MainArticle> {
           userFavourites = arrayData;
         });
       } else {
-        print('No matching documents found');
         return;
       }
   }
@@ -115,7 +114,6 @@ class _MainArticleState extends State<MainArticle> {
                                     child: IconButton(
                                       icon: Icon(favIcon, color: Colors.black),
                                       onPressed: () {
-                                        print(FirebaseAuth.instance.currentUser?.uid);
                                         FirebaseFirestore.instance.collection("Korisnici")
                                             .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
                                             .get()
@@ -151,7 +149,7 @@ class _MainArticleState extends State<MainArticle> {
                                                     backgroundColor: Colors.red,
                                                     content: Text(
                                                       "Uklonjeno iz omilienog!",
-                                                      style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins',),
+                                                      style: TextStyle(fontSize: 16.0, fontFamily: 'Poppins-Medium',),
                                                     )));
                                               }
                                         });
@@ -201,17 +199,17 @@ class _MainArticleState extends State<MainArticle> {
                                               textSection(txt, 'popularity'),
                                               textSection(txt, 'pros_cons'),
                                               textSection(txt, 'enumeration_des'),
-                                              ListCard(txt, 'enumeration', 'color'),
+                                              listCard(txt, 'enumeration', 'color'),
                                               textSection(txt, 'implementation'),
                                               textSection(txt, 'enumeration_des2'),
-                                              ListCard(txt, 'enumeration2', 'color'),
+                                              listCard(txt, 'enumeration2', 'color'),
                                               ]
                                            )
                                       ),
                                 WebViewCompiler(widget.currentTech, txt['color']),
                                ],
                               ),
-                        bottomNavigationBar: const bottomNavigationBar(),
+                        bottomNavigationBar: const BottomNavigation(),
                              ),
                         );
 
@@ -223,7 +221,7 @@ class _MainArticleState extends State<MainArticle> {
     );
   }
 
-  SingleChildScrollView ListCard(QueryDocumentSnapshot<Object?> txt, String textDoc, String color) {
+  SingleChildScrollView listCard(QueryDocumentSnapshot<Object?> txt, String textDoc, String color) {
     return SingleChildScrollView(
                                  child: Column(
                                    children: [

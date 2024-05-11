@@ -20,15 +20,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
-        "Password Reset Email has been sent !",
-        style: TextStyle(fontSize: 20.0),
+        "Email za ponovo postavljanje lozinke je poslan!",
+            style: TextStyle(fontSize: 16.0, fontFamily: 'Poppins-Medium',),
       )));
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
-          "No user found for that email.",
-          style: TextStyle(fontSize: 20.0),
+          "Ne postoji korisnik za unesenu email adresu",
+              style: TextStyle(fontSize: 16.0, fontFamily: 'Poppins-Medium',),
         )));
       }
     }

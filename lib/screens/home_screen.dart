@@ -102,14 +102,12 @@ class _HomePageState extends State<HomePage> {
                       final techWidget = Container(
                         width: 210,
                         decoration: BoxDecoration(
-                          //color: Color(int.parse(tech['color']))
                           color: const Color(0xffffffff).withOpacity(0.7),
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(
                             color: Color(int.parse(tech['color'])),
                             width: 6,
                           ),
-
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

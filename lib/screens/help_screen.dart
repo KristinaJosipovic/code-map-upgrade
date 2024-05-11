@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -139,14 +138,16 @@ class _HelpPageState extends State<HelpPage> {
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Mail je uspješno poslan.'),
+                        content: Text('Mail je uspješno poslan.',
+                          style: TextStyle(fontSize: 16.0, fontFamily: 'Poppins-Medium',),),
                         backgroundColor: Colors.green,
                       ),
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                        content: Text('Sva polja moraju biti popunjena.'),
+                        content: Text('Sva polja moraju biti popunjena.',
+                          style: TextStyle(fontSize: 16.0, fontFamily: 'Poppins-Medium',),),
                         backgroundColor: Colors.redAccent,
                       ),
                     );

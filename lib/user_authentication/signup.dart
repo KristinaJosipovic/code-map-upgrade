@@ -44,15 +44,7 @@ class _SignUpState extends State<SignUp> {
               backgroundColor: Colors.orangeAccent,
               content: Text(
                 "Korisnički račun već postoji",
-                style: TextStyle(fontSize: 18.0),
-              )));
-        }
-        else if (e.code == 'weak-password') {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              backgroundColor: Colors.orangeAccent,
-              content: Text(
-                "Šifra je preslaba (mora biti dužine između 10 i 20 karaktera)",
-                style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins-Medium'),
+                style: TextStyle(fontSize: 18.0, fontFamily: 'Poppins-Medium',),
               )));
         }
       }
@@ -120,6 +112,10 @@ class _SignUpState extends State<SignUp> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Molimo unesite email adresu';
+                            } else if (!RegExp(
+                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                .hasMatch(value)) {
+                              return 'Unesite validnu email adresu';
                             }
                             return null;
                           },
@@ -146,6 +142,12 @@ class _SignUpState extends State<SignUp> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Molimo unesite lozinku';
+                            } else if (value.length < 10 || value.length > 20) {
+                              return 'Šifra mora biti između 10 i 20 karaktera';
+                            } else if (!value.contains(RegExp(r'[0-9]'))) {
+                              return 'Šifra mora sadržavati barem jedan broj';
+                            } else if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+                              return 'Šifra mora imati barem jedan specijalni znak';
                             }
                             return null;
                           },

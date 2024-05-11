@@ -81,7 +81,26 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-    return !isLogin ? const NotLoggedInScreen(color: '0xfff2f2f2',) :
+    return !isLogin ? Scaffold(
+      appBar: AppBar(
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.blue, Colors.green],
+          ),
+        ),
+      ),
+      title: const Text(
+        "Code <map>",
+        style: TextStyle(
+          fontFamily: 'Poppins-Medium',
+          color: Colors.black,
+          fontSize: 23,
+        ),
+      ),
+    ), body: const NotLoggedInScreen(color: '0xff43bf6c',),) :
     Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(

@@ -118,9 +118,6 @@ class _SearchScreenState extends State<SearchScreen> {
                         child: GestureDetector(
                           onTap: () {
                             previousSearchs.add(name.name);
-                            print('Kliknuli ste na jezik: ${name.name}');
-                            print('Kliknuli ste na jezik: ${name.imageUrl}');
-                            String currentTech = name.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => MainArticle(currentTech: name.name, imageUrl: name.imageUrl,)),
