@@ -53,8 +53,8 @@ The main goal of CodeMap is to make learning about programming languages simple,
 To run this Flutter project locally:
 
 ```bash
-git clone https://github.com/your-username/code_map.git
-cd code_map
+git clone https://github.com/KristinaJosipovic/code-map-upgrade.git
+cd code-map-upgrade
 flutter pub get
 flutter run
 
